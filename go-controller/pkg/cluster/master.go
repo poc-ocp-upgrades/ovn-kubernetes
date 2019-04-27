@@ -14,6 +14,8 @@ import (
 func (cluster *OvnClusterController) RebuildOVNDatabase(masterNodeName string, oc *ovn.Controller) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	logrus.Debugf("Rebuild OVN database for cluster nodes")
 	var err error
 	ipChange, err := cluster.checkMasterIPChange(masterNodeName)
@@ -42,6 +44,8 @@ func (cluster *OvnClusterController) RebuildOVNDatabase(masterNodeName string, o
 func (cluster *OvnClusterController) UpdateDBForKubeNodes(masterNodeName string) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	nodes, err := cluster.Kube.GetNodes()
 	if err != nil {
 		logrus.Errorf("Failed to obtain k8s nodes: %v", err)
@@ -68,6 +72,8 @@ func (cluster *OvnClusterController) UpdateDBForKubeNodes(masterNodeName string)
 	return nil
 }
 func (cluster *OvnClusterController) UpdateKubeNsObjects(oc *ovn.Controller) error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	namespaces, err := cluster.Kube.GetNamespaces()
@@ -111,6 +117,8 @@ func (cluster *OvnClusterController) UpdateKubeNsObjects(oc *ovn.Controller) err
 func (cluster *OvnClusterController) UpdateMasterNodeIP(masterNodeName string) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	masterNodeIP, err := netutils.GetNodeIP(masterNodeName)
 	if err != nil {
 		return fmt.Errorf("Failed to obtain local IP from master node "+"%q: %v", masterNodeName, err)
@@ -131,6 +139,8 @@ func (cluster *OvnClusterController) UpdateMasterNodeIP(masterNodeName string) e
 func (cluster *OvnClusterController) checkMasterIPChange(masterNodeName string) (bool, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	masterNodeIP, err := netutils.GetNodeIP(masterNodeName)
 	if err != nil {
 		return false, fmt.Errorf("Failed to obtain local IP from master "+"node %q: %v", masterNodeName, err)
@@ -148,6 +158,8 @@ func (cluster *OvnClusterController) checkMasterIPChange(masterNodeName string) 
 	return false, nil
 }
 func (cluster *OvnClusterController) StartClusterMaster(masterNodeName string) error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	alreadyAllocated := make([]string, 0)
@@ -197,6 +209,8 @@ func (cluster *OvnClusterController) StartClusterMaster(masterNodeName string) e
 	return cluster.watchNodes()
 }
 func (cluster *OvnClusterController) SetupMaster(masterNodeName string) error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	if err := setupOVNMaster(masterNodeName); err != nil {
@@ -264,6 +278,8 @@ func (cluster *OvnClusterController) SetupMaster(masterNodeName string) error {
 func (cluster *OvnClusterController) addNode(node *kapi.Node) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	hostsubnet, ok := node.Annotations[OvnHostSubnet]
 	if ok {
 		_, _, err := net.ParseCIDR(hostsubnet)
@@ -292,6 +308,8 @@ func (cluster *OvnClusterController) addNode(node *kapi.Node) error {
 func (cluster *OvnClusterController) deleteNode(node *kapi.Node) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	sub, ok := node.Annotations[OvnHostSubnet]
 	if !ok {
 		return fmt.Errorf("Error in obtaining host subnet for node %q for deletion", node.Name)
@@ -310,6 +328,8 @@ func (cluster *OvnClusterController) deleteNode(node *kapi.Node) error {
 	return fmt.Errorf("Error deleting subnet %v for node %q: subnet not found in any CIDR range or already available", sub, node.Name)
 }
 func (cluster *OvnClusterController) watchNodes() error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	_, err := cluster.watchFactory.AddNodeHandler(cache.ResourceEventHandlerFuncs{AddFunc: func(obj interface{}) {

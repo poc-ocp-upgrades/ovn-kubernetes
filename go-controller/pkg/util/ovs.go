@@ -32,6 +32,8 @@ const (
 func runningPlatform() (string, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	if runtime.GOOS == windowsOS {
 		return windowsOS, nil
 	}
@@ -79,6 +81,8 @@ var runner *execHelper
 func SetExec(exec kexec.Interface) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	var err error
 	runner = &execHelper{exec: exec}
 	runner.ofctlPath, err = exec.LookPath(ovsOfctlCommand)
@@ -117,9 +121,13 @@ func SetExec(exec kexec.Interface) error {
 func GetExec() kexec.Interface {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return runner.exec
 }
 func run(cmdPath string, args ...string) (*bytes.Buffer, *bytes.Buffer, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	stdout := &bytes.Buffer{}
@@ -137,10 +145,14 @@ func run(cmdPath string, args ...string) (*bytes.Buffer, *bytes.Buffer, error) {
 func RunOVSOfctl(args ...string) (string, string, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	stdout, stderr, err := run(runner.ofctlPath, args...)
 	return strings.Trim(stdout.String(), "\" \n"), stderr.String(), err
 }
 func RunOVSVsctl(args ...string) (string, string, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	cmdArgs := []string{fmt.Sprintf("--timeout=%d", ovsCommandTimeout)}
@@ -149,6 +161,8 @@ func RunOVSVsctl(args ...string) (string, string, error) {
 	return strings.Trim(strings.TrimSpace(stdout.String()), "\""), stderr.String(), err
 }
 func runOVNretry(cmdPath string, args ...string) (*bytes.Buffer, *bytes.Buffer, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	retriesLeft := 200
@@ -171,12 +185,16 @@ func runOVNretry(cmdPath string, args ...string) (*bytes.Buffer, *bytes.Buffer, 
 func RunOVNNbctlUnix(args ...string) (string, string, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	cmdArgs := []string{fmt.Sprintf("--timeout=%d", ovsCommandTimeout)}
 	cmdArgs = append(cmdArgs, args...)
 	stdout, stderr, err := runOVNretry(runner.nbctlPath, cmdArgs...)
 	return strings.Trim(strings.TrimFunc(stdout.String(), unicode.IsSpace), "\""), stderr.String(), err
 }
 func RunOVNNbctlWithTimeout(timeout int, args ...string) (string, string, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	var cmdArgs []string
@@ -193,9 +211,13 @@ func RunOVNNbctlWithTimeout(timeout int, args ...string) (string, string, error)
 func RunOVNNbctl(args ...string) (string, string, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return RunOVNNbctlWithTimeout(ovsCommandTimeout, args...)
 }
 func RunIP(args ...string) (string, string, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	stdout, stderr, err := run(runner.ipPath, args...)
@@ -204,10 +226,14 @@ func RunIP(args ...string) (string, string, error) {
 func RunPowershell(args ...string) (string, string, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	stdout, stderr, err := run(runner.powershellPath, args...)
 	return strings.TrimSpace(stdout.String()), stderr.String(), err
 }
 func RunNetsh(args ...string) (string, string, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	stdout, stderr, err := run(runner.netshPath, args...)
@@ -216,10 +242,14 @@ func RunNetsh(args ...string) (string, string, error) {
 func RunRoute(args ...string) (string, string, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	stdout, stderr, err := run(runner.routePath, args...)
 	return strings.TrimSpace(stdout.String()), stderr.String(), err
 }
 func RawExec(cmdPath string, args ...string) (string, string, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	if filepath.Base(cmdPath) == cmdPath {

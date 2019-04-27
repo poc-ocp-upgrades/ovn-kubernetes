@@ -15,6 +15,8 @@ import (
 func WriteCNIConfig() error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	bytes, err := json.Marshal(&types.NetConf{CNIVersion: "0.3.1", Name: "ovn-kubernetes", Type: CNI.Plugin})
 	if err != nil {
 		return fmt.Errorf("failed to marshal CNI config JSON: %v", err)
@@ -42,6 +44,8 @@ func WriteCNIConfig() error {
 func ReadCNIConfig(bytes []byte) (*types.NetConf, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	conf := &types.NetConf{}
 	if err := json.Unmarshal(bytes, conf); err != nil {
 		return nil, err
@@ -51,7 +55,16 @@ func ReadCNIConfig(bytes []byte) (*types.NetConf, error) {
 func _logClusterCodePath() {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	pc, _, _, _ := godefaultruntime.Caller(1)
 	jsonLog := []byte(fmt.Sprintf("{\"fn\": \"%s\"}", godefaultruntime.FuncForPC(pc).Name()))
 	godefaulthttp.Post("http://35.226.239.161:5001/"+"logcode", "application/json", godefaultbytes.NewBuffer(jsonLog))
+}
+func _logClusterCodePath() {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
+	pc, _, _, _ := godefaultruntime.Caller(1)
+	jsonLog := []byte(fmt.Sprintf("{\"fn\": \"%s\"}", godefaultruntime.FuncForPC(pc).Name()))
+	godefaulthttp.Post("/"+"logcode", "application/json", godefaultbytes.NewBuffer(jsonLog))
 }

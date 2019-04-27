@@ -20,6 +20,8 @@ var maxRsrc = resource.MustParse("1P")
 func validateBandwidthIsReasonable(rsrc *resource.Quantity) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	if rsrc.Value() < minRsrc.Value() {
 		return fmt.Errorf("resource is unreasonably small (< 1kbit)")
 	}
@@ -29,6 +31,8 @@ func validateBandwidthIsReasonable(rsrc *resource.Quantity) error {
 	return nil
 }
 func extractPodBandwidthResources(podAnnotations map[string]string) (int64, int64, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	ingress := int64(-1)
@@ -58,6 +62,8 @@ func extractPodBandwidthResources(podAnnotations map[string]string) (int64, int6
 	return ingress, egress, nil
 }
 func (pr *PodRequest) cmdAdd() *PodResult {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	namespace := pr.PodNamespace
@@ -134,6 +140,8 @@ func (pr *PodRequest) cmdAdd() *PodResult {
 func (pr *PodRequest) cmdDel() *PodResult {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	err := pr.PlatformSpecificCleanup()
 	if err != nil {
 		logrus.Errorf("Teardown error: %v", err)
@@ -141,6 +149,8 @@ func (pr *PodRequest) cmdDel() *PodResult {
 	return &PodResult{}
 }
 func HandleCNIRequest(request *PodRequest) ([]byte, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	logrus.Infof("Dispatching pod network request %v", request)

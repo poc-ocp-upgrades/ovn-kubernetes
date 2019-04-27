@@ -89,6 +89,8 @@ var (
 func init() {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	savedDefault = Default
 	savedLogging = Logging
 	savedCNI = CNI
@@ -99,6 +101,8 @@ func init() {
 func RestoreDefaultConfig() {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	Default = savedDefault
 	Logging = savedLogging
 	CNI = savedCNI
@@ -107,6 +111,8 @@ func RestoreDefaultConfig() {
 	OvnSouth = savedOvnSouth
 }
 func overrideFields(dst, src interface{}) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	dstStruct := reflect.ValueOf(dst).Elem()
@@ -155,6 +161,8 @@ const (
 func rawExec(exec kexec.Interface, cmd string, args ...string) (string, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	cmdPath, err := exec.LookPath(cmd)
 	if err != nil {
 		return "", err
@@ -170,6 +178,8 @@ func rawExec(exec kexec.Interface, cmd string, args ...string) (string, error) {
 func runOVSVsctl(exec kexec.Interface, args ...string) (string, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	newArgs := append([]string{"--timeout=15"}, args...)
 	out, err := rawExec(exec, ovsVsctlCommand, newArgs...)
 	if err != nil {
@@ -178,6 +188,8 @@ func runOVSVsctl(exec kexec.Interface, args ...string) (string, error) {
 	return strings.Trim(strings.TrimSpace(out), "\""), nil
 }
 func getOVSExternalID(exec kexec.Interface, name string) string {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	out, err := runOVSVsctl(exec, "--if-exists", "get", "Open_vSwitch", ".", "external_ids:"+name)
@@ -190,6 +202,8 @@ func getOVSExternalID(exec kexec.Interface, name string) string {
 func setOVSExternalID(exec kexec.Interface, key, value string) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	out, err := runOVSVsctl(exec, "set", "Open_vSwitch", ".", fmt.Sprintf("external_ids:%s=%s", key, value))
 	if err != nil {
 		return fmt.Errorf("Error setting OVS external ID '%s=%s': %v\n  %q", key, value, err, out)
@@ -197,6 +211,8 @@ func setOVSExternalID(exec kexec.Interface, key, value string) error {
 	return nil
 }
 func buildKubernetesConfig(exec kexec.Interface, cli, file *config, defaults *Defaults) error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	if defaults.K8sAPIServer {
@@ -225,6 +241,8 @@ func buildKubernetesConfig(exec kexec.Interface, cli, file *config, defaults *De
 	return nil
 }
 func buildOvnAuth(exec kexec.Interface, direction, externalID string, cliAuth, confAuth *rawOvnAuthConfig, readAddress bool) (OvnAuthConfig, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	ctlCmd := "ovn-" + direction + "ctl"
@@ -259,6 +277,8 @@ func buildOvnAuth(exec kexec.Interface, direction, externalID string, cliAuth, c
 func getConfigFilePath(ctx *cli.Context) (string, bool) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	configFile := ctx.String("config-file")
 	if configFile != "" {
 		return configFile, false
@@ -271,9 +291,13 @@ func getConfigFilePath(ctx *cli.Context) (string, bool) {
 func InitConfig(ctx *cli.Context, exec kexec.Interface, defaults *Defaults) (string, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return InitConfigWithPath(ctx, exec, "", defaults)
 }
 func InitConfigWithPath(ctx *cli.Context, exec kexec.Interface, configFile string, defaults *Defaults) (string, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	var cfg config
@@ -353,6 +377,8 @@ type OvnDBAuth struct {
 func pathExists(path string) bool {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_, err := os.Stat(path)
 	if err != nil && os.IsNotExist(err) {
 		return false
@@ -360,6 +386,8 @@ func pathExists(path string) bool {
 	return true
 }
 func newOvnDBAuth(exec kexec.Interface, ctlCmd, externalID, urlString, privkey, cert, cacert string, server bool) (*OvnDBAuth, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	if urlString == "" {
@@ -424,6 +452,8 @@ func newOvnDBAuth(exec kexec.Interface, ctlCmd, externalID, urlString, privkey, 
 func (a *OvnDBAuth) ensureCACert() error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	if pathExists(a.CACert) {
 		return nil
 	}
@@ -446,12 +476,16 @@ func (a *OvnDBAuth) ensureCACert() error {
 func (a *OvnDBAuth) GetURL() string {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	if a.server {
 		return a.OvnAddressForServer
 	}
 	return a.OvnAddressForClient
 }
 func (a *OvnDBAuth) SetDBAuth() error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	if a.Scheme == OvnDBSchemeUnix {
@@ -507,6 +541,8 @@ func (a *OvnDBAuth) SetDBAuth() error {
 func (a *OvnDBAuth) updateIP(newIP string) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	if a.OvnAddressForClient != "" {
 		s := strings.Split(a.OvnAddressForClient, ":")
 		if len(s) != 3 {
@@ -517,6 +553,8 @@ func (a *OvnDBAuth) updateIP(newIP string) error {
 	return nil
 }
 func UpdateOvnNodeAuth(masterIP string) error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	logrus.Debugf("Update OVN node auth with new master ip: %s", masterIP)

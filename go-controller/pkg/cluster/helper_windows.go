@@ -8,9 +8,13 @@ import (
 func getDefaultGatewayInterfaceDetails() (string, string, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return "", "", fmt.Errorf("Not implemented yet on Windows")
 }
 func getIntfName(gatewayIntf string) (string, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	intfName, err := util.GetNicName(gatewayIntf)

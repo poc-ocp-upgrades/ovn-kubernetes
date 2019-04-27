@@ -16,6 +16,8 @@ type IPTablesHelper interface {
 func NewWithProtocol(proto iptables.Protocol) (IPTablesHelper, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return iptables.NewWithProtocol(proto)
 }
 
@@ -24,14 +26,20 @@ type FakeTable map[string][]string
 func newFakeTable() *FakeTable {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return &FakeTable{}
 }
 func (t *FakeTable) String() string {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return fmt.Sprintf("%v", *t)
 }
 func (t *FakeTable) getChain(chainName string) ([]string, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	chain, ok := (*t)[chainName]
@@ -49,12 +57,16 @@ type FakeIPTables struct {
 func NewFakeWithProtocol(proto iptables.Protocol) (*FakeIPTables, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	ipt := &FakeIPTables{proto: proto, tables: make(map[string]*FakeTable)}
 	ipt.tables["filter"] = newFakeTable()
 	ipt.tables["nat"] = newFakeTable()
 	return ipt, nil
 }
 func (f *FakeIPTables) getTable(tableName string) (*FakeTable, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	table, ok := f.tables[tableName]
@@ -64,6 +76,8 @@ func (f *FakeIPTables) getTable(tableName string) (*FakeTable, error) {
 	return table, nil
 }
 func (f *FakeIPTables) ListChains(tableName string) ([]string, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	table, ok := f.tables[tableName]
@@ -79,6 +93,8 @@ func (f *FakeIPTables) ListChains(tableName string) ([]string, error) {
 func (f *FakeIPTables) NewChain(tableName, chainName string) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	table, err := f.getTable(tableName)
 	if err != nil {
 		return err
@@ -90,6 +106,8 @@ func (f *FakeIPTables) NewChain(tableName, chainName string) error {
 	return nil
 }
 func (f *FakeIPTables) Exists(tableName, chainName string, rulespec ...string) (bool, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	table, err := f.getTable(tableName)
@@ -111,6 +129,8 @@ func (f *FakeIPTables) Exists(tableName, chainName string, rulespec ...string) (
 func (f *FakeIPTables) Insert(tableName, chainName string, pos int, rulespec ...string) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	table, err := f.getTable(tableName)
 	if err != nil {
 		return err
@@ -129,6 +149,8 @@ func (f *FakeIPTables) Insert(tableName, chainName string, pos int, rulespec ...
 	return nil
 }
 func (f *FakeIPTables) MatchState(tables map[string]FakeTable) error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	if len(tables) != len(f.tables) {

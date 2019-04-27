@@ -21,12 +21,16 @@ type Plugin struct{ socketPath string }
 func NewCNIPlugin(socketPath string) *Plugin {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	if len(socketPath) == 0 {
 		socketPath = serverSocketPath
 	}
 	return &Plugin{socketPath: socketPath}
 }
 func newCNIRequest(args *skel.CmdArgs) *Request {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	envMap := make(map[string]string)
@@ -39,6 +43,8 @@ func newCNIRequest(args *skel.CmdArgs) *Request {
 	return &Request{Env: envMap, Config: args.StdinData}
 }
 func (p *Plugin) doCNI(url string, req *Request) ([]byte, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	data, err := json.Marshal(req)
@@ -71,6 +77,8 @@ func (p *Plugin) doCNI(url string, req *Request) ([]byte, error) {
 func (p *Plugin) CmdAdd(args *skel.CmdArgs) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	conf, err := config.ReadCNIConfig(args.StdinData)
 	if err != nil {
 		return fmt.Errorf("invalid stdin args")
@@ -87,6 +95,8 @@ func (p *Plugin) CmdAdd(args *skel.CmdArgs) error {
 	return types.PrintResult(result, conf.CNIVersion)
 }
 func (p *Plugin) CmdDel(args *skel.CmdArgs) error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	_, err := p.doCNI("http://dummy/", newCNIRequest(args))

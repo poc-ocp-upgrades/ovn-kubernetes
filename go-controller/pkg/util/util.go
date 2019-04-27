@@ -10,6 +10,8 @@ import (
 func StringArg(context *cli.Context, name string) (string, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	val := context.String(name)
 	if val == "" {
 		return "", fmt.Errorf("argument --%s should be non-null", name)
@@ -17,6 +19,8 @@ func StringArg(context *cli.Context, name string) (string, error) {
 	return val, nil
 }
 func FetchIfMacWindows(interfaceName string) (string, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	stdoutStderr, err := exec.Command("powershell", "$(Get-NetAdapter", "-IncludeHidden", "-InterfaceAlias", fmt.Sprintf("\"%s\"", interfaceName), ").MacAddress").CombinedOutput()

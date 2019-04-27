@@ -9,10 +9,14 @@ import (
 func returnIPNetPointers(input string) *net.IPNet {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_, ipNet, _ := net.ParseCIDR(input)
 	return ipNet
 }
 func TestParseClusterSubnetEntries(t *testing.T) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	tests := []struct {
@@ -41,6 +45,8 @@ func TestParseClusterSubnetEntries(t *testing.T) {
 	}
 }
 func TestCidrsOverlap(t *testing.T) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	tests := []struct {

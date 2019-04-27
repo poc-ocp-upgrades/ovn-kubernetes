@@ -12,6 +12,8 @@ import (
 func (oc *Controller) syncPods(pods []interface{}) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	expectedLogicalPorts := make(map[string]bool)
 	for _, podInterface := range pods {
 		pod, ok := podInterface.(*kapi.Pod)
@@ -44,6 +46,8 @@ func (oc *Controller) syncPods(pods []interface{}) {
 func (oc *Controller) deletePodAcls(logicalPort string) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	uuids, stderr, err := util.RunOVNNbctl("--data=bare", "--no-heading", "--columns=_uuid", "find", "ACL", fmt.Sprintf("external_ids:logical_port=%s", logicalPort))
 	if err != nil {
 		logrus.Errorf("Error in getting list of acls "+"stdout: %q, stderr: %q, error: %v", uuids, stderr, err)
@@ -74,6 +78,8 @@ func (oc *Controller) deletePodAcls(logicalPort string) {
 func (oc *Controller) getLogicalPortUUID(logicalPort string) string {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	if oc.logicalPortUUIDCache[logicalPort] != "" {
 		return oc.logicalPortUUIDCache[logicalPort]
 	}
@@ -89,6 +95,8 @@ func (oc *Controller) getLogicalPortUUID(logicalPort string) string {
 	return oc.logicalPortUUIDCache[logicalPort]
 }
 func (oc *Controller) getGatewayFromSwitch(logicalSwitch string) (string, string, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	var gatewayIPMaskStr, stderr string
@@ -116,6 +124,8 @@ func (oc *Controller) getGatewayFromSwitch(logicalSwitch string) (string, string
 func (oc *Controller) deleteLogicalPort(pod *kapi.Pod) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	if pod.Spec.HostNetwork {
 		return
 	}
@@ -140,6 +150,8 @@ func (oc *Controller) deleteLogicalPort(pod *kapi.Pod) {
 	return
 }
 func (oc *Controller) addLogicalPort(pod *kapi.Pod) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	var out, stderr string
@@ -223,6 +235,8 @@ func (oc *Controller) addLogicalPort(pod *kapi.Pod) {
 	return
 }
 func (oc *Controller) AddLogicalPortWithIP(pod *kapi.Pod) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	if pod.Spec.HostNetwork {

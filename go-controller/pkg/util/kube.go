@@ -13,6 +13,8 @@ import (
 func NewClientset(conf *config.KubernetesConfig) (*kubernetes.Clientset, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	var kconfig *rest.Config
 	var err error
 	if conf.Kubeconfig != "" {

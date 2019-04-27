@@ -14,6 +14,8 @@ import (
 func NewCNIServer(rundir string) *Server {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	if len(rundir) == 0 {
 		rundir = serverRunDir
 	}
@@ -24,6 +26,8 @@ func NewCNIServer(rundir string) *Server {
 	return s
 }
 func gatherCNIArgs(env map[string]string) (map[string]string, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	cniArgs, ok := env["CNI_ARGS"]
@@ -41,6 +45,8 @@ func gatherCNIArgs(env map[string]string) (map[string]string, error) {
 	return mapArgs, nil
 }
 func cniRequestToPodRequest(r *http.Request) (*PodRequest, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	var cr Request
@@ -85,6 +91,8 @@ func cniRequestToPodRequest(r *http.Request) (*PodRequest, error) {
 	return req, nil
 }
 func (s *Server) handleCNIRequest(w http.ResponseWriter, r *http.Request) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	req, err := cniRequestToPodRequest(r)

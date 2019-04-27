@@ -18,9 +18,13 @@ const (
 func getBridgeName(iface string) string {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return fmt.Sprintf("br%s", iface)
 }
 func GetNicName(brName string) string {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	stdout, stderr, err := RunOVSVsctl("br-get-external-id", brName, "bridge-uplink")
@@ -34,6 +38,8 @@ func GetNicName(brName string) string {
 	return stdout
 }
 func saveIPAddress(oldLink, newLink netlink.Link, addrs []netlink.Addr) error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	for i := range addrs {
@@ -54,6 +60,8 @@ func saveIPAddress(oldLink, newLink netlink.Link, addrs []netlink.Addr) error {
 func delAddRoute(oldLink, newLink netlink.Link, route netlink.Route) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	if err := netlink.RouteDel(&route); err != nil && !strings.Contains(err.Error(), "no such process") {
 		logrus.Errorf("Remove route from %q failed: %v", oldLink.Attrs().Name, err)
 		return err
@@ -67,6 +75,8 @@ func delAddRoute(oldLink, newLink netlink.Link, route netlink.Route) error {
 	return nil
 }
 func saveRoute(oldLink, newLink netlink.Link, routes []netlink.Route) error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	for i := range routes {
@@ -91,6 +101,8 @@ func saveRoute(oldLink, newLink netlink.Link, routes []netlink.Route) error {
 	return nil
 }
 func setupDefaultFile() {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	platform, err := runningPlatform()
@@ -133,6 +145,8 @@ func setupDefaultFile() {
 func NicToBridge(iface string) (string, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	ifaceLink, err := netlink.LinkByName(iface)
 	if err != nil {
 		return "", err
@@ -166,6 +180,8 @@ func NicToBridge(iface string) (string, error) {
 	return bridge, nil
 }
 func BridgeToNic(bridge string) error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	bridgeLink, err := netlink.LinkByName(bridge)

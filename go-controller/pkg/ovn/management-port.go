@@ -18,6 +18,8 @@ const (
 func configureManagementPortWindows(clusterSubnet []string, clusterServicesSubnet, routerIP, interfaceName, interfaceIP string) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_, _, err := util.RunPowershell("Enable-NetAdapter", "-IncludeHidden", interfaceName)
 	if err != nil {
 		return err
@@ -99,6 +101,8 @@ func configureManagementPortWindows(clusterSubnet []string, clusterServicesSubne
 func configureManagementPort(clusterSubnet []string, clusterServicesSubnet, routerIP, interfaceName, interfaceIP string) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	if runtime.GOOS == windowsOS {
 		return configureManagementPortWindows(clusterSubnet, clusterServicesSubnet, routerIP, interfaceName, interfaceIP)
 	}
@@ -137,6 +141,8 @@ func configureManagementPort(clusterSubnet []string, clusterServicesSubnet, rout
 	return nil
 }
 func CreateManagementPort(nodeName, localSubnet, clusterServicesSubnet string, clusterSubnet []string) error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	ip, localSubnetNet, err := net.ParseCIDR(localSubnet)

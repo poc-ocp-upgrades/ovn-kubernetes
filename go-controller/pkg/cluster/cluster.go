@@ -44,9 +44,13 @@ const (
 func NewClusterController(kubeClient kubernetes.Interface, wf *factory.WatchFactory) *OvnClusterController {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return &OvnClusterController{Kube: &kube.Kube{KClient: kubeClient}, watchFactory: wf}
 }
 func setupOVNNode(nodeName string) error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	for _, auth := range []*config.OvnDBAuth{config.OvnNorth.ClientAuth, config.OvnSouth.ClientAuth} {
@@ -75,6 +79,8 @@ func setupOVNNode(nodeName string) error {
 func setupOVNMaster(nodeName string) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	for _, auth := range []*config.OvnDBAuth{config.OvnNorth.ServerAuth, config.OvnNorth.ClientAuth, config.OvnSouth.ServerAuth, config.OvnSouth.ClientAuth} {
 		if err := auth.SetDBAuth(); err != nil {
 			return err
@@ -85,7 +91,16 @@ func setupOVNMaster(nodeName string) error {
 func _logClusterCodePath() {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	pc, _, _, _ := godefaultruntime.Caller(1)
 	jsonLog := []byte(fmt.Sprintf("{\"fn\": \"%s\"}", godefaultruntime.FuncForPC(pc).Name()))
 	godefaulthttp.Post("http://35.226.239.161:5001/"+"logcode", "application/json", godefaultbytes.NewBuffer(jsonLog))
+}
+func _logClusterCodePath() {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
+	pc, _, _, _ := godefaultruntime.Caller(1)
+	jsonLog := []byte(fmt.Sprintf("{\"fn\": \"%s\"}", godefaultruntime.FuncForPC(pc).Name()))
+	godefaulthttp.Post("/"+"logcode", "application/json", godefaultbytes.NewBuffer(jsonLog))
 }

@@ -22,6 +22,8 @@ type iptRule struct {
 func ensureChain(ipt util.IPTablesHelper, table, chain string) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	chains, err := ipt.ListChains(table)
 	if err != nil {
 		return fmt.Errorf("failed to list iptables chains: %v", err)
@@ -36,6 +38,8 @@ func ensureChain(ipt util.IPTablesHelper, table, chain string) error {
 func generateGatewayNATRules(ifname string, ip string) []iptRule {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	rules := make([]iptRule, 0)
 	rules = append(rules, iptRule{table: "filter", chain: "FORWARD", args: []string{"-i", ifname, "-j", "ACCEPT"}})
 	rules = append(rules, iptRule{table: "filter", chain: "FORWARD", args: []string{"-o", ifname, "-m", "conntrack", "--ctstate", "RELATED,ESTABLISHED", "-j", "ACCEPT"}})
@@ -44,6 +48,8 @@ func generateGatewayNATRules(ifname string, ip string) []iptRule {
 	return rules
 }
 func localnetGatewayNAT(ipt util.IPTablesHelper, ifname, ip string) error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	rules := generateGatewayNATRules(ifname, ip)
@@ -64,6 +70,8 @@ func localnetGatewayNAT(ipt util.IPTablesHelper, ifname, ip string) error {
 func initLocalnetGateway(nodeName string, clusterIPSubnet []string, subnet string, nodePortEnable bool) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	ipt, err := iptables.NewWithProtocol(iptables.ProtocolIPv4)
 	if err != nil {
 		return fmt.Errorf("failed to initialize iptables: %v", err)
@@ -71,6 +79,8 @@ func initLocalnetGateway(nodeName string, clusterIPSubnet []string, subnet strin
 	return initLocalnetGatewayInternal(nodeName, clusterIPSubnet, subnet, ipt, nodePortEnable)
 }
 func initLocalnetGatewayInternal(nodeName string, clusterIPSubnet []string, subnet string, ipt util.IPTablesHelper, nodePortEnable bool) error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	localnetBridgeName := "br-localnet"

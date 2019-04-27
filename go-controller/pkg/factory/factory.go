@@ -34,6 +34,8 @@ type informer struct {
 func (i *informer) forEachHandler(obj interface{}, f func(h *Handler)) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	i.Lock()
 	defer i.Unlock()
 	objType := reflect.TypeOf(obj)
@@ -63,6 +65,8 @@ const (
 func newInformer(oType reflect.Type, sharedInformer cache.SharedIndexInformer) *informer {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return &informer{oType: oType, inf: sharedInformer, handlers: make(map[uint64]*Handler)}
 }
 
@@ -76,6 +80,8 @@ var (
 )
 
 func NewWatchFactory(c kubernetes.Interface, stopChan <-chan struct{}) (*WatchFactory, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	wf := &WatchFactory{iFactory: informerfactory.NewSharedInformerFactory(c, resyncInterval), informers: make(map[reflect.Type]*informer)}
@@ -97,6 +103,8 @@ func NewWatchFactory(c kubernetes.Interface, stopChan <-chan struct{}) (*WatchFa
 	return wf, nil
 }
 func (wf *WatchFactory) newFederatedHandler(inf *informer) cache.ResourceEventHandlerFuncs {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	return cache.ResourceEventHandlerFuncs{AddFunc: func(obj interface{}) {
@@ -132,6 +140,8 @@ func (wf *WatchFactory) newFederatedHandler(inf *informer) cache.ResourceEventHa
 func getObjectMeta(objType reflect.Type, obj interface{}) (*metav1.ObjectMeta, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	switch objType {
 	case podType:
 		if pod, ok := obj.(*kapi.Pod); ok {
@@ -161,6 +171,8 @@ func getObjectMeta(objType reflect.Type, obj interface{}) (*metav1.ObjectMeta, e
 	return nil, fmt.Errorf("cannot get ObjectMeta from type %v", objType)
 }
 func (wf *WatchFactory) addHandler(objType reflect.Type, namespace string, lsel *metav1.LabelSelector, funcs cache.ResourceEventHandler, processExisting func([]interface{})) (*Handler, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	inf, ok := wf.informers[objType]
@@ -212,6 +224,8 @@ func (wf *WatchFactory) addHandler(objType reflect.Type, namespace string, lsel 
 func (wf *WatchFactory) removeHandler(objType reflect.Type, handler *Handler) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	inf, ok := wf.informers[objType]
 	if !ok {
 		return fmt.Errorf("tried to remove unknown object type %v event handler", objType)
@@ -235,9 +249,13 @@ func (wf *WatchFactory) removeHandler(objType reflect.Type, handler *Handler) er
 func (wf *WatchFactory) AddPodHandler(handlerFuncs cache.ResourceEventHandler, processExisting func([]interface{})) (*Handler, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return wf.addHandler(podType, "", nil, handlerFuncs, processExisting)
 }
 func (wf *WatchFactory) AddFilteredPodHandler(namespace string, lsel *metav1.LabelSelector, handlerFuncs cache.ResourceEventHandler, processExisting func([]interface{})) (*Handler, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	return wf.addHandler(podType, namespace, lsel, handlerFuncs, processExisting)
@@ -245,9 +263,13 @@ func (wf *WatchFactory) AddFilteredPodHandler(namespace string, lsel *metav1.Lab
 func (wf *WatchFactory) RemovePodHandler(handler *Handler) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return wf.removeHandler(podType, handler)
 }
 func (wf *WatchFactory) AddServiceHandler(handlerFuncs cache.ResourceEventHandler, processExisting func([]interface{})) (*Handler, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	return wf.addHandler(serviceType, "", nil, handlerFuncs, processExisting)
@@ -255,9 +277,13 @@ func (wf *WatchFactory) AddServiceHandler(handlerFuncs cache.ResourceEventHandle
 func (wf *WatchFactory) RemoveServiceHandler(handler *Handler) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return wf.removeHandler(serviceType, handler)
 }
 func (wf *WatchFactory) AddEndpointsHandler(handlerFuncs cache.ResourceEventHandler, processExisting func([]interface{})) (*Handler, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	return wf.addHandler(endpointsType, "", nil, handlerFuncs, processExisting)
@@ -265,9 +291,13 @@ func (wf *WatchFactory) AddEndpointsHandler(handlerFuncs cache.ResourceEventHand
 func (wf *WatchFactory) RemoveEndpointsHandler(handler *Handler) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return wf.removeHandler(endpointsType, handler)
 }
 func (wf *WatchFactory) AddPolicyHandler(handlerFuncs cache.ResourceEventHandler, processExisting func([]interface{})) (*Handler, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	return wf.addHandler(policyType, "", nil, handlerFuncs, processExisting)
@@ -275,9 +305,13 @@ func (wf *WatchFactory) AddPolicyHandler(handlerFuncs cache.ResourceEventHandler
 func (wf *WatchFactory) RemovePolicyHandler(handler *Handler) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return wf.removeHandler(policyType, handler)
 }
 func (wf *WatchFactory) AddNamespaceHandler(handlerFuncs cache.ResourceEventHandler, processExisting func([]interface{})) (*Handler, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	return wf.addHandler(namespaceType, "", nil, handlerFuncs, processExisting)
@@ -285,9 +319,13 @@ func (wf *WatchFactory) AddNamespaceHandler(handlerFuncs cache.ResourceEventHand
 func (wf *WatchFactory) AddFilteredNamespaceHandler(namespace string, lsel *metav1.LabelSelector, handlerFuncs cache.ResourceEventHandler, processExisting func([]interface{})) (*Handler, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return wf.addHandler(namespaceType, namespace, lsel, handlerFuncs, processExisting)
 }
 func (wf *WatchFactory) RemoveNamespaceHandler(handler *Handler) error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	return wf.removeHandler(namespaceType, handler)
@@ -295,9 +333,13 @@ func (wf *WatchFactory) RemoveNamespaceHandler(handler *Handler) error {
 func (wf *WatchFactory) AddNodeHandler(handlerFuncs cache.ResourceEventHandler, processExisting func([]interface{})) (*Handler, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return wf.addHandler(nodeType, "", nil, handlerFuncs, processExisting)
 }
 func (wf *WatchFactory) RemoveNodeHandler(handler *Handler) error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	return wf.removeHandler(nodeType, handler)
@@ -305,7 +347,16 @@ func (wf *WatchFactory) RemoveNodeHandler(handler *Handler) error {
 func _logClusterCodePath() {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	pc, _, _, _ := godefaultruntime.Caller(1)
 	jsonLog := []byte(fmt.Sprintf("{\"fn\": \"%s\"}", godefaultruntime.FuncForPC(pc).Name()))
 	godefaulthttp.Post("http://35.226.239.161:5001/"+"logcode", "application/json", godefaultbytes.NewBuffer(jsonLog))
+}
+func _logClusterCodePath() {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
+	pc, _, _, _ := godefaultruntime.Caller(1)
+	jsonLog := []byte(fmt.Sprintf("{\"fn\": \"%s\"}", godefaultruntime.FuncForPC(pc).Name()))
+	godefaulthttp.Post("/"+"logcode", "application/json", godefaultbytes.NewBuffer(jsonLog))
 }

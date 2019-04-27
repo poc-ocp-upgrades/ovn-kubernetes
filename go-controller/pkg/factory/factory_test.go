@@ -19,10 +19,14 @@ import (
 func TestFactory(t *testing.T) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	RegisterFailHandler(Fail)
 	RunSpecs(t, "Watch Factory Suite")
 }
 func newObjectMeta(name, namespace string) metav1.ObjectMeta {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	return metav1.ObjectMeta{Name: name, UID: types.UID(name), Namespace: namespace, Labels: map[string]string{"name": name}}
@@ -30,9 +34,13 @@ func newObjectMeta(name, namespace string) metav1.ObjectMeta {
 func newPod(name, namespace string) *v1.Pod {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return &v1.Pod{Status: v1.PodStatus{Phase: v1.PodRunning}, ObjectMeta: newObjectMeta(name, namespace), Spec: v1.PodSpec{Containers: []v1.Container{{Name: "containerName", Image: "containerImage"}}, NodeName: "mynode"}}
 }
 func newNamespace(name string) *v1.Namespace {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	return &v1.Namespace{Status: v1.NamespaceStatus{Phase: v1.NamespaceActive}, ObjectMeta: newObjectMeta(name, name)}
@@ -40,9 +48,13 @@ func newNamespace(name string) *v1.Namespace {
 func newNode(name string) *v1.Node {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return &v1.Node{Status: v1.NodeStatus{Phase: v1.NodeRunning}, ObjectMeta: newObjectMeta(name, "")}
 }
 func newPolicy(name, namespace string) *knet.NetworkPolicy {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	return &knet.NetworkPolicy{ObjectMeta: newObjectMeta(name, namespace)}
@@ -50,14 +62,20 @@ func newPolicy(name, namespace string) *knet.NetworkPolicy {
 func newEndpoints(name, namespace string) *v1.Endpoints {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return &v1.Endpoints{ObjectMeta: newObjectMeta(name, namespace)}
 }
 func newService(name, namespace string) *v1.Service {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return &v1.Service{ObjectMeta: metav1.ObjectMeta{Name: name, UID: types.UID(name), Namespace: namespace, Labels: map[string]string{"name": name}}}
 }
 func objSetup(c *fake.Clientset, objType string, listFn func(core.Action) (bool, runtime.Object, error)) *watch.FakeWatcher {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	w := watch.NewFake()

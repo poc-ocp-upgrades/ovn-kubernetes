@@ -41,6 +41,8 @@ type portPolicy struct {
 func (pp *portPolicy) getL4Match() (string, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	if pp.protocol == TCP {
 		return fmt.Sprintf("tcp && tcp.dst==%d", pp.port), nil
 	} else if pp.protocol == UDP {
@@ -51,9 +53,13 @@ func (pp *portPolicy) getL4Match() (string, error) {
 func newGressPolicy(policyType knet.PolicyType, idx int) *gressPolicy {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return &gressPolicy{policyType: policyType, idx: idx, peerAddressSets: make(map[string]bool), sortedPeerAddressSets: make([]string, 0), portPolicies: make([]*portPolicy, 0)}
 }
 func (gp *gressPolicy) addPortPolicy(portJSON *knet.NetworkPolicyPort) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	gp.portPolicies = append(gp.portPolicies, &portPolicy{protocol: string(*portJSON.Protocol), port: portJSON.Port.IntVal})
@@ -61,10 +67,14 @@ func (gp *gressPolicy) addPortPolicy(portJSON *knet.NetworkPolicyPort) {
 func (gp *gressPolicy) addIPBlock(ipblockJSON *knet.IPBlock) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	gp.ipBlockCidr = ipblockJSON.CIDR
 	gp.ipBlockExcept = append([]string{}, ipblockJSON.Except...)
 }
 func (gp *gressPolicy) getL3MatchFromAddressSet() string {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	var l3Match, addresses string
@@ -89,6 +99,8 @@ func (gp *gressPolicy) getL3MatchFromAddressSet() string {
 func (gp *gressPolicy) getMatchFromIPBlock(lportMatch, l4Match string) string {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	var match string
 	if gp.policyType == knet.PolicyTypeIngress {
 		if l4Match == noneMatch {
@@ -108,6 +120,8 @@ func (gp *gressPolicy) getMatchFromIPBlock(lportMatch, l4Match string) string {
 func (gp *gressPolicy) addAddressSet(hashedAddressSet string) (string, string, bool) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	if gp.peerAddressSets[hashedAddressSet] {
 		return "", "", false
 	}
@@ -118,6 +132,8 @@ func (gp *gressPolicy) addAddressSet(hashedAddressSet string) (string, string, b
 	return oldL3Match, gp.getL3MatchFromAddressSet(), true
 }
 func (gp *gressPolicy) delAddressSet(hashedAddressSet string) (string, string, bool) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	if !gp.peerAddressSets[hashedAddressSet] {
@@ -145,6 +161,8 @@ const (
 )
 
 func (oc *Controller) addAllowACLFromNode(logicalSwitch string) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	uuid, stderr, err := util.RunOVNNbctl("--data=bare", "--no-heading", "--columns=_uuid", "find", "ACL", fmt.Sprintf("external-ids:logical_switch=%s", logicalSwitch), "external-ids:node-acl=yes")
@@ -181,6 +199,8 @@ func (oc *Controller) addAllowACLFromNode(logicalSwitch string) {
 func (oc *Controller) syncNetworkPolicies(networkPolicies []interface{}) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	if oc.portGroupSupport {
 		oc.syncNetworkPoliciesPortGroup(networkPolicies)
 	} else {
@@ -188,6 +208,8 @@ func (oc *Controller) syncNetworkPolicies(networkPolicies []interface{}) {
 	}
 }
 func (oc *Controller) AddNetworkPolicy(policy *knet.NetworkPolicy) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	if oc.portGroupSupport {
@@ -199,6 +221,8 @@ func (oc *Controller) AddNetworkPolicy(policy *knet.NetworkPolicy) {
 func (oc *Controller) deleteNetworkPolicy(policy *knet.NetworkPolicy) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	if oc.portGroupSupport {
 		oc.deleteNetworkPolicyPortGroup(policy)
 	} else {
@@ -206,6 +230,8 @@ func (oc *Controller) deleteNetworkPolicy(policy *knet.NetworkPolicy) {
 	}
 }
 func (oc *Controller) shutdownHandlers(np *namespacePolicy) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	for _, handler := range np.podHandlerList {

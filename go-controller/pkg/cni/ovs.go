@@ -10,6 +10,8 @@ import (
 func ovsExec(args ...string) (string, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	args = append([]string{"--timeout=30"}, args...)
 	output, err := exec.Command("ovs-vsctl", args...).CombinedOutput()
 	if err != nil {
@@ -25,10 +27,14 @@ func ovsExec(args ...string) (string, error) {
 func ovsCreate(table string, values ...string) (string, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	args := append([]string{"create", table}, values...)
 	return ovsExec(args...)
 }
 func ovsDestroy(table, record string) error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	_, err := ovsExec("--if-exists", "destroy", table, record)
@@ -37,11 +43,15 @@ func ovsDestroy(table, record string) error {
 func ovsSet(table, record string, values ...string) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	args := append([]string{"set", table, record}, values...)
 	_, err := ovsExec(args...)
 	return err
 }
 func ovsFind(table, column, condition string) ([]string, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	output, err := ovsExec("--no-heading", "--columns="+column, "find", table, condition)
@@ -57,6 +67,8 @@ func ovsFind(table, column, condition string) ([]string, error) {
 	return values, nil
 }
 func ovsClear(table, record string, columns ...string) error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	args := append([]string{"--if-exists", "clear", table, record}, columns...)

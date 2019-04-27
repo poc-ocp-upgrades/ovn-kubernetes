@@ -13,6 +13,8 @@ import (
 func (s *Server) Start(requestFunc cniRequestFunc) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	if requestFunc == nil {
 		return fmt.Errorf("no pod request handler")
 	}

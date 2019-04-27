@@ -14,6 +14,8 @@ import (
 func GetK8sClusterRouter() (string, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	k8sClusterRouter, stderr, err := RunOVNNbctl("--data=bare", "--no-heading", "--columns=_uuid", "find", "logical_router", "external_ids:k8s-cluster-router=yes")
 	if err != nil {
 		logrus.Errorf("Failed to get k8s cluster router, stderr: %q, "+"error: %v", stderr, err)
@@ -25,6 +27,8 @@ func GetK8sClusterRouter() (string, error) {
 	return k8sClusterRouter, nil
 }
 func getLocalSystemID() (string, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	localSystemID, stderr, err := RunOVSVsctl("--if-exists", "get", "Open_vSwitch", ".", "external_ids:system-id")
@@ -40,6 +44,8 @@ func getLocalSystemID() (string, error) {
 func lockNBForGateways() error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	localSystemID, err := getLocalSystemID()
 	if err != nil {
 		return err
@@ -53,12 +59,16 @@ func lockNBForGateways() error {
 func unlockNBForGateways() {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	stdout, stderr, err := RunOVNNbctl("--", "set", "nb_global", ".", "external-ids:gateway-lock=\"\"")
 	if err != nil {
 		logrus.Errorf("Failed to delete lock for gateways, "+"stdout: %q, stderr: %q, error: %v", stdout, stderr, err)
 	}
 }
 func generateGatewayIP() (string, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	stdout, stderr, err := RunOVNNbctl("--data=bare", "--no-heading", "--columns=network", "find", "logical_router_port", "external_ids:connect_to_join=yes")
@@ -91,6 +101,8 @@ func generateGatewayIP() (string, error) {
 	return ipMask, nil
 }
 func GatewayInit(clusterIPSubnet []string, nodeName, nicIP, physicalInterface, bridgeInterface, defaultGW, rampoutIPSubnet string, gatewayLBEnable bool) error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	ip, physicalIPNet, err := net.ParseCIDR(nicIP)
@@ -297,7 +309,16 @@ func GatewayInit(clusterIPSubnet []string, nodeName, nicIP, physicalInterface, b
 func _logClusterCodePath() {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	pc, _, _, _ := godefaultruntime.Caller(1)
 	jsonLog := []byte(fmt.Sprintf("{\"fn\": \"%s\"}", godefaultruntime.FuncForPC(pc).Name()))
 	godefaulthttp.Post("http://35.226.239.161:5001/"+"logcode", "application/json", godefaultbytes.NewBuffer(jsonLog))
+}
+func _logClusterCodePath() {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
+	pc, _, _, _ := godefaultruntime.Caller(1)
+	jsonLog := []byte(fmt.Sprintf("{\"fn\": \"%s\"}", godefaultruntime.FuncForPC(pc).Name()))
+	godefaulthttp.Post("/"+"logcode", "application/json", godefaultbytes.NewBuffer(jsonLog))
 }

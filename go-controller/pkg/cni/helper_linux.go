@@ -15,6 +15,8 @@ import (
 func renameLink(curName, newName string) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	link, err := netlink.LinkByName(curName)
 	if err != nil {
 		return err
@@ -31,6 +33,8 @@ func renameLink(curName, newName string) error {
 	return nil
 }
 func setupInterface(netns ns.NetNS, containerID, ifName, macAddress, ipAddress, gatewayIP string, mtu int) (*current.Interface, *current.Interface, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	hostIface := &current.Interface{}
@@ -88,6 +92,8 @@ func setupInterface(netns ns.NetNS, containerID, ifName, macAddress, ipAddress, 
 func (pr *PodRequest) ConfigureInterface(namespace string, podName string, macAddress string, ipAddress string, gatewayIP string, mtu int, ingress, egress int64) ([]*current.Interface, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	netns, err := ns.GetNS(pr.Netns)
 	if err != nil {
 		return nil, fmt.Errorf("failed to open netns %q: %v", pr.Netns, err)
@@ -121,6 +127,8 @@ func (pr *PodRequest) ConfigureInterface(namespace string, podName string, macAd
 	return []*current.Interface{hostIface, contIface}, nil
 }
 func (pr *PodRequest) PlatformSpecificCleanup() error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	ifaceName := pr.SandboxID[:15]

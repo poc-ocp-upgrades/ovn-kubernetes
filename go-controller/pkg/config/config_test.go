@@ -18,10 +18,14 @@ import (
 func TestConfig(t *testing.T) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	RegisterFailHandler(Fail)
 	RunSpecs(t, "Config Suite")
 }
 func writeConfigFile(cfgFile *os.File, randomOptData bool, args ...string) error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	sections := make(map[string][]string)
@@ -73,6 +77,8 @@ func writeConfigFile(cfgFile *os.File, randomOptData bool, args ...string) error
 func runInit(app *cli.App, runType int, cfgFile *os.File, args ...string) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	app.Action = func(ctx *cli.Context) error {
 		_, err := InitConfig(ctx, kexec.New(), nil)
 		return err
@@ -105,6 +111,8 @@ var _ = AfterSuite(func() {
 })
 
 func createTempFile(name string) (string, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	fname := filepath.Join(tmpDir, name)

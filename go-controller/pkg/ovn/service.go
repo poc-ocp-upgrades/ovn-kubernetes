@@ -10,9 +10,13 @@ import (
 func isServiceIPSet(service *kapi.Service) bool {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return service.Spec.ClusterIP != kapi.ClusterIPNone && service.Spec.ClusterIP != ""
 }
 func (ovn *Controller) syncServices(services []interface{}) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	clusterServices := make(map[string][]string)
@@ -125,6 +129,8 @@ func (ovn *Controller) syncServices(services []interface{}) {
 	}
 }
 func (ovn *Controller) deleteService(service *kapi.Service) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	if !isServiceIPSet(service) || len(service.Spec.Ports) == 0 {

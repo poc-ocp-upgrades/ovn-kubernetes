@@ -15,6 +15,8 @@ import (
 func getHNSIdFromConfigOrByGatewayIP(gatewayIP string) (string, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	if config.CNI.WinHNSNetworkID != "" {
 		logrus.Infof("Using HNS Network Id from config: %v", config.CNI.WinHNSNetworkID)
 		return config.CNI.WinHNSNetworkID, nil
@@ -44,6 +46,8 @@ func getHNSIdFromConfigOrByGatewayIP(gatewayIP string) (string, error) {
 func createHNSEndpoint(hnsConfiguration *hcsshim.HNSEndpoint) (*hcsshim.HNSEndpoint, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	logrus.Infof("Creating HNS endpoint")
 	hnsConfigBytes, err := json.Marshal(hnsConfiguration)
 	if err != nil {
@@ -61,6 +65,8 @@ func createHNSEndpoint(hnsConfiguration *hcsshim.HNSEndpoint) (*hcsshim.HNSEndpo
 func containerHotAttachEndpoint(existingHNSEndpoint *hcsshim.HNSEndpoint, containerID string) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	logrus.Infof("Attaching endpoint %v to container %v", existingHNSEndpoint.Id, containerID)
 	if err := hcsshim.HotAttachEndpoint(containerID, existingHNSEndpoint.Id); err != nil {
 		logrus.Infof("Error attaching the endpoint to the container, error: %v", err)
@@ -70,6 +76,8 @@ func containerHotAttachEndpoint(existingHNSEndpoint *hcsshim.HNSEndpoint, contai
 	return nil
 }
 func deleteHNSEndpoint(endpointName string) error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	logrus.Infof("Deleting HNS endpoint: %v", endpointName)
@@ -88,6 +96,8 @@ func deleteHNSEndpoint(endpointName string) error {
 	return nil
 }
 func (pr *PodRequest) ConfigureInterface(namespace string, podName string, macAddress string, ipAddress string, gatewayIP string, mtu int, ingress, egress int64) ([]*current.Interface, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	conf := pr.CNIConf
@@ -150,6 +160,8 @@ func (pr *PodRequest) ConfigureInterface(namespace string, podName string, macAd
 	return []*current.Interface{}, nil
 }
 func (pr *PodRequest) PlatformSpecificCleanup() error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	namespace := pr.PodNamespace

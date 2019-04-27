@@ -7,6 +7,8 @@ import (
 func getIPv4Address(iface string) (string, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	var ipAddress string
 	intf, err := net.InterfaceByName(iface)
 	if err != nil {
@@ -27,6 +29,8 @@ func getIPv4Address(iface string) (string, error) {
 	return ipAddress, nil
 }
 func (cluster *OvnClusterController) initGateway(nodeName string, clusterIPSubnet []string, subnet string) error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	if cluster.LocalnetGateway {

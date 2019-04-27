@@ -8,6 +8,8 @@ import (
 func initSpareGateway(nodeName string, clusterIPSubnet []string, subnet, gwNextHop, gwIntf string, nodeportEnable bool) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	ipAddress, err := getIPv4Address(gwIntf)
 	if err != nil {
 		return fmt.Errorf("Failed to get interface details for %s (%v)", gwIntf, err)

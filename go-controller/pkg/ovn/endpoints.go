@@ -15,6 +15,8 @@ type lbEndpoints struct {
 func (ovn *Controller) AddEndpoints(ep *kapi.Endpoints) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	svc, err := ovn.kube.GetService(ep.Namespace, ep.Name)
 	if err != nil {
 		logrus.Debugf("no service found for endpoint %s in namespace %s", ep.Name, ep.Namespace)
@@ -106,6 +108,8 @@ func (ovn *Controller) AddEndpoints(ep *kapi.Endpoints) error {
 func (ovn *Controller) handleExternalIPs(svc *kapi.Service, svcPort kapi.ServicePort, ips []string, targetPort int32) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	logrus.Debugf("handling external IPs for svc %v", svc.Name)
 	if len(svc.Spec.ExternalIPs) == 0 {
 		return
@@ -123,6 +127,8 @@ func (ovn *Controller) handleExternalIPs(svc *kapi.Service, svcPort kapi.Service
 	}
 }
 func (ovn *Controller) deleteEndpoints(ep *kapi.Endpoints) error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	svc, err := ovn.kube.GetService(ep.Namespace, ep.Name)

@@ -43,9 +43,13 @@ const (
 func NewOvnController(kubeClient kubernetes.Interface, wf *factory.WatchFactory, nodePortEnable bool) *Controller {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return &Controller{kube: &kube.Kube{KClient: kubeClient}, watchFactory: wf, logicalSwitchCache: make(map[string]bool), logicalPortCache: make(map[string]string), logicalPortUUIDCache: make(map[string]string), namespaceAddressSet: make(map[string]map[string]bool), namespacePolicies: make(map[string]map[string]*namespacePolicy), namespaceMutex: make(map[string]*sync.Mutex), lspIngressDenyCache: make(map[string]int), lspEgressDenyCache: make(map[string]int), lspMutex: &sync.Mutex{}, lsMutex: &sync.Mutex{}, gatewayCache: make(map[string]string), loadbalancerClusterCache: make(map[string]string), loadbalancerGWCache: make(map[string]string), nodePortEnable: nodePortEnable}
 }
 func (oc *Controller) Run() error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	_, _, err := util.RunOVNNbctl("--columns=_uuid", "list", "port_group")
@@ -60,6 +64,8 @@ func (oc *Controller) Run() error {
 	return nil
 }
 func (oc *Controller) WatchPods() error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	_, err := oc.watchFactory.AddPodHandler(cache.ResourceEventHandlerFuncs{AddFunc: func(obj interface{}) {
@@ -82,6 +88,8 @@ func (oc *Controller) WatchPods() error {
 func (oc *Controller) WatchServices() error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_, err := oc.watchFactory.AddServiceHandler(cache.ResourceEventHandlerFuncs{AddFunc: func(obj interface{}) {
 	}, UpdateFunc: func(old, new interface{}) {
 	}, DeleteFunc: func(obj interface{}) {
@@ -91,6 +99,8 @@ func (oc *Controller) WatchServices() error {
 	return err
 }
 func (oc *Controller) WatchEndpoints() error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	_, err := oc.watchFactory.AddEndpointsHandler(cache.ResourceEventHandlerFuncs{AddFunc: func(obj interface{}) {
@@ -128,6 +138,8 @@ func (oc *Controller) WatchEndpoints() error {
 func (oc *Controller) WatchNetworkPolicy() error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_, err := oc.watchFactory.AddPolicyHandler(cache.ResourceEventHandlerFuncs{AddFunc: func(obj interface{}) {
 		policy := obj.(*kapisnetworking.NetworkPolicy)
 		oc.AddNetworkPolicy(policy)
@@ -150,6 +162,8 @@ func (oc *Controller) WatchNetworkPolicy() error {
 func (oc *Controller) WatchNamespaces() error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_, err := oc.watchFactory.AddNamespaceHandler(cache.ResourceEventHandlerFuncs{AddFunc: func(obj interface{}) {
 		ns := obj.(*kapi.Namespace)
 		oc.AddNamespace(ns)
@@ -164,6 +178,8 @@ func (oc *Controller) WatchNamespaces() error {
 	return err
 }
 func (oc *Controller) WatchNodes() error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	_, err := oc.watchFactory.AddNodeHandler(cache.ResourceEventHandlerFuncs{AddFunc: func(obj interface{}) {

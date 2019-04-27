@@ -9,6 +9,8 @@ import (
 func RemoveNode(nodeName string) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	clusterRouter, err := GetK8sClusterRouter()
 	if err != nil {
 		return fmt.Errorf("failed to get cluster router")

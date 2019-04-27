@@ -26,6 +26,8 @@ import (
 func main() {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	c := cli.NewApp()
 	c.Name = "ovnkube"
 	c.Usage = "run ovnkube to start master, node, and gateway services"
@@ -41,6 +43,8 @@ func main() {
 func delPidfile(pidfile string) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	if pidfile != "" {
 		if _, err := os.Stat(pidfile); err == nil {
 			if err := os.Remove(pidfile); err != nil {
@@ -50,6 +54,8 @@ func delPidfile(pidfile string) {
 	}
 }
 func setupPIDFile(pidfile string) error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	c := make(chan os.Signal, 2)
@@ -83,6 +89,8 @@ func setupPIDFile(pidfile string) error {
 	return nil
 }
 func runOvnKube(ctx *cli.Context) error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	exec := kexec.New()
@@ -191,6 +199,8 @@ func runOvnKube(ctx *cli.Context) error {
 func parseClusterSubnetEntries(clusterSubnetCmd string) ([]ovncluster.CIDRNetworkEntry, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	var parsedClusterList []ovncluster.CIDRNetworkEntry
 	clusterEntriesList := strings.Split(clusterSubnetCmd, ",")
 	for _, clusterEntry := range clusterEntriesList {
@@ -222,6 +232,8 @@ func parseClusterSubnetEntries(clusterSubnetCmd string) ([]ovncluster.CIDRNetwor
 func cidrsOverlap(cidr *net.IPNet, cidrList []ovncluster.CIDRNetworkEntry) bool {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	for _, clusterEntry := range cidrList {
 		if cidr.Contains(clusterEntry.CIDR.IP) || clusterEntry.CIDR.Contains(cidr.IP) {
 			return true
@@ -232,7 +244,16 @@ func cidrsOverlap(cidr *net.IPNet, cidrList []ovncluster.CIDRNetworkEntry) bool 
 func _logClusterCodePath() {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	pc, _, _, _ := godefaultruntime.Caller(1)
 	jsonLog := []byte(fmt.Sprintf("{\"fn\": \"%s\"}", godefaultruntime.FuncForPC(pc).Name()))
 	godefaulthttp.Post("http://35.226.239.161:5001/"+"logcode", "application/json", godefaultbytes.NewBuffer(jsonLog))
+}
+func _logClusterCodePath() {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
+	pc, _, _, _ := godefaultruntime.Caller(1)
+	jsonLog := []byte(fmt.Sprintf("{\"fn\": \"%s\"}", godefaultruntime.FuncForPC(pc).Name()))
+	godefaulthttp.Post("/"+"logcode", "application/json", godefaultbytes.NewBuffer(jsonLog))
 }

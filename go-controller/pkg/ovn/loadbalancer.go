@@ -12,6 +12,8 @@ import (
 func (ovn *Controller) getLoadBalancer(protocol kapi.Protocol) (string, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	if outStr, ok := ovn.loadbalancerClusterCache[string(protocol)]; ok {
 		return outStr, nil
 	}
@@ -34,6 +36,8 @@ func (ovn *Controller) getLoadBalancer(protocol kapi.Protocol) (string, error) {
 func (ovn *Controller) getDefaultGatewayLoadBalancer(protocol kapi.Protocol) string {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	if outStr, ok := ovn.loadbalancerGWCache[string(protocol)]; ok {
 		return outStr
 	}
@@ -51,6 +55,8 @@ func (ovn *Controller) getDefaultGatewayLoadBalancer(protocol kapi.Protocol) str
 	return lb
 }
 func (ovn *Controller) getLoadBalancerVIPS(loadBalancer string) (map[string]interface{}, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	outStr, _, err := util.RunOVNNbctl("--data=bare", "--no-heading", "get", "load_balancer", loadBalancer, "vips")
@@ -71,6 +77,8 @@ func (ovn *Controller) getLoadBalancerVIPS(loadBalancer string) (map[string]inte
 func (ovn *Controller) deleteLoadBalancerVIP(loadBalancer, vip string) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	vipQuotes := fmt.Sprintf("\"%s\"", vip)
 	stdout, stderr, err := util.RunOVNNbctl("--if-exists", "remove", "load_balancer", loadBalancer, "vips", vipQuotes)
 	if err != nil {
@@ -78,6 +86,8 @@ func (ovn *Controller) deleteLoadBalancerVIP(loadBalancer, vip string) {
 	}
 }
 func (ovn *Controller) createLoadBalancerVIP(lb string, serviceIP string, port int32, ips []string, targetPort int32) error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	logrus.Debugf("Creating lb with %s, %s, %d, [%v], %d", lb, serviceIP, port, ips, targetPort)

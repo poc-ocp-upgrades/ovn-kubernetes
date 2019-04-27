@@ -10,6 +10,8 @@ import (
 func getDefaultGatewayInterfaceDetails() (string, string, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	routes, err := netlink.RouteList(nil, syscall.AF_INET)
 	if err != nil {
 		return "", "", fmt.Errorf("Failed to get routing table in node")
@@ -30,6 +32,8 @@ func getDefaultGatewayInterfaceDetails() (string, string, error) {
 	return "", "", fmt.Errorf("Failed to get default gateway interface")
 }
 func getIntfName(gatewayIntf string) (string, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	intfName := util.GetNicName(gatewayIntf)

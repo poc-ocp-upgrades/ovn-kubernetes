@@ -22,6 +22,8 @@ import (
 func addNodeportLBs(nodeName, tcpLBUUID, udpLBUUID string, fakeCmds []fakeexec.FakeCommandAction) []fakeexec.FakeCommandAction {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	fakeCmds = ovntest.AddFakeCmdsNoOutputNoError(fakeCmds, []string{"ovn-nbctl --timeout=15 --data=bare --no-heading --columns=_uuid find load_balancer external_ids:TCP_lb_gateway_router=GR_" + nodeName})
 	fakeCmds = ovntest.AddFakeCmd(fakeCmds, &ovntest.ExpectedCmd{Cmd: "ovn-nbctl --timeout=15 -- create load_balancer external_ids:TCP_lb_gateway_router=GR_" + nodeName, Output: tcpLBUUID})
 	fakeCmds = ovntest.AddFakeCmdsNoOutputNoError(fakeCmds, []string{"ovn-nbctl --timeout=15 --data=bare --no-heading --columns=_uuid find load_balancer external_ids:UDP_lb_gateway_router=GR_" + nodeName})

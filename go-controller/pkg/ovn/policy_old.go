@@ -15,6 +15,8 @@ import (
 func (oc *Controller) syncNetworkPoliciesOld(networkPolicies []interface{}) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	expectedPolicies := make(map[string]map[string]bool)
 	for _, npInterface := range networkPolicies {
 		policy, ok := npInterface.(*knet.NetworkPolicy)
@@ -35,6 +37,8 @@ func (oc *Controller) syncNetworkPoliciesOld(networkPolicies []interface{}) {
 	}
 }
 func (oc *Controller) addACLAllowOld(namespace, policy, logicalSwitch, logicalPort, match, l4Match string, ipBlockCidr bool, gressNum int, policyType knet.PolicyType) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	var direction, action string
@@ -61,6 +65,8 @@ func (oc *Controller) addACLAllowOld(namespace, policy, logicalSwitch, logicalPo
 func (oc *Controller) modifyACLAllowOld(namespace, policy, logicalPort, oldMatch string, newMatch string, gressNum int, policyType knet.PolicyType) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	uuid, stderr, err := util.RunOVNNbctl("--data=bare", "--no-heading", "--columns=_uuid", "find", "ACL", oldMatch, fmt.Sprintf("external-ids:namespace=%s", namespace), fmt.Sprintf("external-ids:policy=%s", policy), fmt.Sprintf("external-ids:%s_num=%d", policyType, gressNum), fmt.Sprintf("external-ids:policy_type=%s", policyType), fmt.Sprintf("external-ids:logical_port=%s", logicalPort))
 	if err != nil {
 		logrus.Errorf("find failed to get the allow rule for "+"namespace=%s, logical_port=%s, stderr: %q (%v)", namespace, logicalPort, stderr, err)
@@ -75,6 +81,8 @@ func (oc *Controller) modifyACLAllowOld(namespace, policy, logicalPort, oldMatch
 	}
 }
 func (oc *Controller) deleteACLAllowOld(namespace, policy, logicalSwitch, logicalPort, match, l4Match string, ipBlockCidr bool, gressNum int, policyType knet.PolicyType) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	uuid, stderr, err := util.RunOVNNbctl("--data=bare", "--no-heading", "--columns=_uuid", "find", "ACL", fmt.Sprintf("external-ids:l4Match=\"%s\"", l4Match), fmt.Sprintf("external-ids:ipblock_cidr=%t", ipBlockCidr), fmt.Sprintf("external-ids:namespace=%s", namespace), fmt.Sprintf("external-ids:policy=%s", policy), fmt.Sprintf("external-ids:%s_num=%d", policyType, gressNum), fmt.Sprintf("external-ids:policy_type=%s", policyType), fmt.Sprintf("external-ids:logical_switch=%s", logicalSwitch), fmt.Sprintf("external-ids:logical_port=%s", logicalPort))
@@ -93,6 +101,8 @@ func (oc *Controller) deleteACLAllowOld(namespace, policy, logicalSwitch, logica
 	}
 }
 func (oc *Controller) addIPBlockACLDenyOld(namespace, policy, logicalSwitch, logicalPort, except, priority string, policyType knet.PolicyType) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	var match, l3Match, direction, lportMatch string
@@ -123,6 +133,8 @@ func (oc *Controller) addIPBlockACLDenyOld(namespace, policy, logicalSwitch, log
 func (oc *Controller) deleteIPBlockACLDenyOld(namespace, policy, logicalSwitch, logicalPort, except string, policyType knet.PolicyType) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	var match, lportMatch, l3Match string
 	if policyType == knet.PolicyTypeIngress {
 		lportMatch = fmt.Sprintf("outport == \\\"%s\\\"", logicalPort)
@@ -151,6 +163,8 @@ func (oc *Controller) deleteIPBlockACLDenyOld(namespace, policy, logicalSwitch, 
 func (oc *Controller) addACLDenyOld(namespace, logicalSwitch, logicalPort, priority string, policyType knet.PolicyType) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	var match, direction string
 	direction = toLport
 	if policyType == knet.PolicyTypeIngress {
@@ -175,6 +189,8 @@ func (oc *Controller) addACLDenyOld(namespace, logicalSwitch, logicalPort, prior
 func (oc *Controller) deleteACLDenyOld(namespace, logicalSwitch, logicalPort string, policyType knet.PolicyType) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	var match string
 	if policyType == knet.PolicyTypeIngress {
 		match = fmt.Sprintf("match=\"outport == \\\"%s\\\"\"", logicalPort)
@@ -197,6 +213,8 @@ func (oc *Controller) deleteACLDenyOld(namespace, logicalSwitch, logicalPort str
 	return
 }
 func (oc *Controller) deleteAclsPolicyOld(namespace, policy string) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	uuids, stderr, err := util.RunOVNNbctl("--data=bare", "--no-heading", "--columns=_uuid", "find", "ACL", fmt.Sprintf("external-ids:namespace=%s", namespace), fmt.Sprintf("external-ids:policy=%s", policy))
@@ -226,6 +244,8 @@ func (oc *Controller) deleteAclsPolicyOld(namespace, policy string) {
 	}
 }
 func (oc *Controller) localPodAddOrDelACLOld(addDel string, policy *knet.NetworkPolicy, pod *kapi.Pod, gress *gressPolicy, logicalSwitch string) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	logicalPort := fmt.Sprintf("%s_%s", pod.Namespace, pod.Name)
@@ -285,6 +305,8 @@ func (oc *Controller) localPodAddOrDelACLOld(addDel string, policy *knet.Network
 func (oc *Controller) localPodAddDefaultDenyOld(policy *knet.NetworkPolicy, logicalPort, logicalSwitch string) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	oc.lspMutex.Lock()
 	if !(len(policy.Spec.PolicyTypes) == 1 && policy.Spec.PolicyTypes[0] == knet.PolicyTypeEgress) {
 		if oc.lspIngressDenyCache[logicalPort] == 0 {
@@ -301,6 +323,8 @@ func (oc *Controller) localPodAddDefaultDenyOld(policy *knet.NetworkPolicy, logi
 	oc.lspMutex.Unlock()
 }
 func (oc *Controller) localPodDelDefaultDenyOld(policy *knet.NetworkPolicy, logicalPort, logicalSwitch string) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	oc.lspMutex.Lock()
@@ -323,6 +347,8 @@ func (oc *Controller) localPodDelDefaultDenyOld(policy *knet.NetworkPolicy, logi
 	oc.lspMutex.Unlock()
 }
 func (oc *Controller) handleLocalPodSelectorAddFuncOld(policy *knet.NetworkPolicy, np *namespacePolicy, obj interface{}) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	pod := obj.(*kapi.Pod)
@@ -355,6 +381,8 @@ func (oc *Controller) handleLocalPodSelectorAddFuncOld(policy *knet.NetworkPolic
 func (oc *Controller) handleLocalPodSelectorDelFuncOld(policy *knet.NetworkPolicy, np *namespacePolicy, obj interface{}) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	pod := obj.(*kapi.Pod)
 	logicalSwitch := pod.Spec.NodeName
 	if logicalSwitch == "" {
@@ -381,6 +409,8 @@ func (oc *Controller) handleLocalPodSelectorDelFuncOld(policy *knet.NetworkPolic
 func (oc *Controller) handleLocalPodSelectorOld(policy *knet.NetworkPolicy, np *namespacePolicy) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	h, err := oc.watchFactory.AddFilteredPodHandler(policy.Namespace, &policy.Spec.PodSelector, cache.ResourceEventHandlerFuncs{AddFunc: func(obj interface{}) {
 		oc.handleLocalPodSelectorAddFuncOld(policy, np, obj)
 	}, DeleteFunc: func(obj interface{}) {
@@ -395,6 +425,8 @@ func (oc *Controller) handleLocalPodSelectorOld(policy *knet.NetworkPolicy, np *
 	np.podHandlerList = append(np.podHandlerList, h)
 }
 func (oc *Controller) handlePeerPodSelectorAddUpdateOld(policy *knet.NetworkPolicy, np *namespacePolicy, addressMap map[string]bool, addressSet string, obj interface{}) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	pod := obj.(*kapi.Pod)
@@ -415,6 +447,8 @@ func (oc *Controller) handlePeerPodSelectorAddUpdateOld(policy *knet.NetworkPoli
 	oc.setAddressSet(addressSet, addresses)
 }
 func (oc *Controller) handlePeerPodSelectorDeleteOld(policy *knet.NetworkPolicy, np *namespacePolicy, addressMap map[string]bool, addressSet string, obj interface{}) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	pod := obj.(*kapi.Pod)
@@ -440,6 +474,8 @@ func (oc *Controller) handlePeerPodSelectorDeleteOld(policy *knet.NetworkPolicy,
 func (oc *Controller) handlePeerPodSelectorOld(policy *knet.NetworkPolicy, podSelector *metav1.LabelSelector, addressSet string, addressMap map[string]bool, np *namespacePolicy) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	h, err := oc.watchFactory.AddFilteredPodHandler(policy.Namespace, podSelector, cache.ResourceEventHandlerFuncs{AddFunc: func(obj interface{}) {
 		oc.handlePeerPodSelectorAddUpdateOld(policy, np, addressMap, addressSet, obj)
 	}, DeleteFunc: func(obj interface{}) {
@@ -454,6 +490,8 @@ func (oc *Controller) handlePeerPodSelectorOld(policy *knet.NetworkPolicy, podSe
 	np.podHandlerList = append(np.podHandlerList, h)
 }
 func (oc *Controller) handlePeerNamespaceAndPodSelectorOld(policy *knet.NetworkPolicy, namespaceSelector *metav1.LabelSelector, podSelector *metav1.LabelSelector, addressSet string, addressMap map[string]bool, gress *gressPolicy, np *namespacePolicy) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	namespaceHandler, err := oc.watchFactory.AddFilteredNamespaceHandler("", namespaceSelector, cache.ResourceEventHandlerFuncs{AddFunc: func(obj interface{}) {
@@ -489,6 +527,8 @@ func (oc *Controller) handlePeerNamespaceAndPodSelectorOld(policy *knet.NetworkP
 func (oc *Controller) handlePeerNamespaceSelectorModifyOld(gress *gressPolicy, np *namespacePolicy, oldl3Match, newl3Match string) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	for logicalPort := range np.localPods {
 		var lportMatch string
 		if gress.policyType == knet.PolicyTypeIngress {
@@ -513,6 +553,8 @@ func (oc *Controller) handlePeerNamespaceSelectorModifyOld(gress *gressPolicy, n
 	}
 }
 func (oc *Controller) handlePeerNamespaceSelectorOld(policy *knet.NetworkPolicy, namespaceSelector *metav1.LabelSelector, gress *gressPolicy, np *namespacePolicy) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	h, err := oc.watchFactory.AddFilteredNamespaceHandler("", namespaceSelector, cache.ResourceEventHandlerFuncs{AddFunc: func(obj interface{}) {
@@ -549,6 +591,8 @@ func (oc *Controller) handlePeerNamespaceSelectorOld(policy *knet.NetworkPolicy,
 	np.nsHandlerList = append(np.nsHandlerList, h)
 }
 func (oc *Controller) addNetworkPolicyOld(policy *knet.NetworkPolicy) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	logrus.Infof("Adding network policy %s in namespace %s", policy.Name, policy.Namespace)
@@ -631,6 +675,8 @@ func (oc *Controller) addNetworkPolicyOld(policy *knet.NetworkPolicy) {
 func (oc *Controller) getLogicalSwitchForLogicalPort(logicalPort string) string {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	if oc.logicalPortCache[logicalPort] != "" {
 		return oc.logicalPortCache[logicalPort]
 	}
@@ -646,6 +692,8 @@ func (oc *Controller) getLogicalSwitchForLogicalPort(logicalPort string) string 
 	return logicalSwitch
 }
 func (oc *Controller) deleteNetworkPolicyOld(policy *knet.NetworkPolicy) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	logrus.Infof("Deleting network policy %s in namespace %s", policy.Name, policy.Namespace)

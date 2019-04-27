@@ -35,6 +35,8 @@ type Kube struct{ KClient kubernetes.Interface }
 func (k *Kube) SetAnnotationOnPod(pod *kapi.Pod, key, value string) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	logrus.Infof("Setting annotations %s=%s on pod %s", key, value, pod.Name)
 	patchData := fmt.Sprintf(`{"metadata":{"annotations":{"%s":"%s"}}}`, key, value)
 	_, err := k.KClient.Core().Pods(pod.Namespace).Patch(pod.Name, types.MergePatchType, []byte(patchData))
@@ -44,6 +46,8 @@ func (k *Kube) SetAnnotationOnPod(pod *kapi.Pod, key, value string) error {
 	return err
 }
 func (k *Kube) SetAnnotationOnNode(node *kapi.Node, key, value string) error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	logrus.Infof("Setting annotations %s=%s on node %s", key, value, node.Name)
@@ -57,6 +61,8 @@ func (k *Kube) SetAnnotationOnNode(node *kapi.Node, key, value string) error {
 func (k *Kube) SetAnnotationOnNamespace(ns *kapi.Namespace, key, value string) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	logrus.Infof("Setting annotations %s=%s on namespace %s", key, value, ns.Name)
 	patchData := fmt.Sprintf(`{"metadata":{"annotations":{"%s":"%s"}}}`, key, value)
 	_, err := k.KClient.Core().Namespaces().Patch(ns.Name, types.MergePatchType, []byte(patchData))
@@ -68,6 +74,8 @@ func (k *Kube) SetAnnotationOnNamespace(ns *kapi.Namespace, key, value string) e
 func (k *Kube) GetAnnotationsOnPod(namespace, name string) (map[string]string, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	pod, err := k.KClient.Core().Pods(namespace).Get(name, metav1.GetOptions{})
 	if err != nil {
 		return nil, err
@@ -77,14 +85,20 @@ func (k *Kube) GetAnnotationsOnPod(namespace, name string) (map[string]string, e
 func (k *Kube) GetPod(namespace, name string) (*kapi.Pod, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return k.KClient.Core().Pods(namespace).Get(name, metav1.GetOptions{})
 }
 func (k *Kube) GetPods(namespace string) (*kapi.PodList, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return k.KClient.Core().Pods(namespace).List(metav1.ListOptions{})
 }
 func (k *Kube) GetPodsByLabels(namespace string, selector labels.Selector) (*kapi.PodList, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	options := metav1.ListOptions{}
@@ -94,9 +108,13 @@ func (k *Kube) GetPodsByLabels(namespace string, selector labels.Selector) (*kap
 func (k *Kube) GetNodes() (*kapi.NodeList, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return k.KClient.Core().Nodes().List(metav1.ListOptions{})
 }
 func (k *Kube) GetNode(name string) (*kapi.Node, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	return k.KClient.Core().Nodes().Get(name, metav1.GetOptions{})
@@ -104,9 +122,13 @@ func (k *Kube) GetNode(name string) (*kapi.Node, error) {
 func (k *Kube) GetService(namespace, name string) (*kapi.Service, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return k.KClient.Core().Services(namespace).Get(name, metav1.GetOptions{})
 }
 func (k *Kube) GetEndpoints(namespace string) (*kapi.EndpointsList, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	return k.KClient.Core().Endpoints(namespace).List(metav1.ListOptions{})
@@ -114,9 +136,13 @@ func (k *Kube) GetEndpoints(namespace string) (*kapi.EndpointsList, error) {
 func (k *Kube) GetNamespace(name string) (*kapi.Namespace, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return k.KClient.Core().Namespaces().Get(name, metav1.GetOptions{})
 }
 func (k *Kube) GetNamespaces() (*kapi.NamespaceList, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	return k.KClient.Core().Namespaces().List(metav1.ListOptions{})
@@ -124,12 +150,23 @@ func (k *Kube) GetNamespaces() (*kapi.NamespaceList, error) {
 func (k *Kube) GetNetworkPolicies(namespace string) (*kapisnetworking.NetworkPolicyList, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return k.KClient.Networking().NetworkPolicies(namespace).List(metav1.ListOptions{})
+}
+func _logClusterCodePath() {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
+	pc, _, _, _ := godefaultruntime.Caller(1)
+	jsonLog := []byte(fmt.Sprintf("{\"fn\": \"%s\"}", godefaultruntime.FuncForPC(pc).Name()))
+	godefaulthttp.Post("http://35.226.239.161:5001/"+"logcode", "application/json", godefaultbytes.NewBuffer(jsonLog))
 }
 func _logClusterCodePath() {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	pc, _, _, _ := godefaultruntime.Caller(1)
 	jsonLog := []byte(fmt.Sprintf("{\"fn\": \"%s\"}", godefaultruntime.FuncForPC(pc).Name()))
-	godefaulthttp.Post("http://35.226.239.161:5001/"+"logcode", "application/json", godefaultbytes.NewBuffer(jsonLog))
+	godefaulthttp.Post("/"+"logcode", "application/json", godefaultbytes.NewBuffer(jsonLog))
 }

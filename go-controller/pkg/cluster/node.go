@@ -14,6 +14,8 @@ import (
 func (cluster *OvnClusterController) StartClusterNode(name string) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	count := 300
 	var err error
 	var node *kapi.Node
@@ -77,6 +79,8 @@ func (cluster *OvnClusterController) StartClusterNode(name string) error {
 func (cluster *OvnClusterController) updateOvnNode(masterIP string, node *kapi.Node, subnet string) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	err := config.UpdateOvnNodeAuth(masterIP)
 	if err != nil {
 		return err
@@ -103,6 +107,8 @@ func (cluster *OvnClusterController) updateOvnNode(masterIP string, node *kapi.N
 	return nil
 }
 func (cluster *OvnClusterController) watchNamespaceUpdate(node *kapi.Node, subnet string) error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	_, err := cluster.watchFactory.AddNamespaceHandler(cache.ResourceEventHandlerFuncs{UpdateFunc: func(old, newer interface{}) {

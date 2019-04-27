@@ -11,6 +11,8 @@ import (
 func (oc *Controller) syncNamespaces(namespaces []interface{}) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	expectedNs := make(map[string]bool)
 	for _, nsInterface := range namespaces {
 		ns, ok := nsInterface.(*kapi.Namespace)
@@ -32,6 +34,8 @@ func (oc *Controller) syncNamespaces(namespaces []interface{}) {
 func (oc *Controller) waitForNamespaceEvent(namespace string) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	count := 100
 	for {
 		if oc.namespacePolicies[namespace] != nil {
@@ -46,6 +50,8 @@ func (oc *Controller) waitForNamespaceEvent(namespace string) error {
 	return nil
 }
 func (oc *Controller) addPodToNamespaceAddressSet(ns, address string) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	if oc.namespacePolicies[ns] == nil {
@@ -66,6 +72,8 @@ func (oc *Controller) addPodToNamespaceAddressSet(ns, address string) {
 func (oc *Controller) deletePodFromNamespaceAddressSet(ns, address string) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	if address == "" || oc.namespacePolicies[ns] == nil {
 		return
 	}
@@ -82,6 +90,8 @@ func (oc *Controller) deletePodFromNamespaceAddressSet(ns, address string) {
 	oc.setAddressSet(hashedAddressSet(ns), addresses)
 }
 func (oc *Controller) AddNamespace(ns *kapi.Namespace) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	logrus.Debugf("Adding namespace: %s", ns.Name)
@@ -109,6 +119,8 @@ func (oc *Controller) AddNamespace(ns *kapi.Namespace) {
 	oc.namespacePolicies[ns.Name] = make(map[string]*namespacePolicy)
 }
 func (oc *Controller) deleteNamespace(ns *kapi.Namespace) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	logrus.Debugf("Deleting namespace: %+v", ns.Name)

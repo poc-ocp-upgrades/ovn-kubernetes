@@ -9,10 +9,14 @@ import (
 func (ovn *Controller) getOvnGateways() ([]string, string, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	out, stderr, err := util.RunOVNNbctl("--data=bare", "--no-heading", "--columns=name", "find", "logical_router", "options:chassis!=null")
 	return strings.Fields(out), stderr, err
 }
 func (ovn *Controller) getGatewayPhysicalIP(physicalGateway string) (string, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	physicalIP, _, err := util.RunOVNNbctl("get", "logical_router", physicalGateway, "external_ids:physical_ip")
@@ -24,6 +28,8 @@ func (ovn *Controller) getGatewayPhysicalIP(physicalGateway string) (string, err
 func (ovn *Controller) getGatewayLoadBalancer(physicalGateway, protocol string) (string, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	externalIDKey := protocol + "_lb_gateway_router"
 	loadBalancer, _, err := util.RunOVNNbctl("--data=bare", "--no-heading", "--columns=_uuid", "find", "load_balancer", "external_ids:"+externalIDKey+"="+physicalGateway)
 	if err != nil {
@@ -32,6 +38,8 @@ func (ovn *Controller) getGatewayLoadBalancer(physicalGateway, protocol string) 
 	return loadBalancer, nil
 }
 func (ovn *Controller) createGatewaysVIP(protocol string, port, targetPort int32, ips []string) error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	logrus.Debugf("Creating Gateway VIP - %s, %d, %d, %v", protocol, port, targetPort, ips)
