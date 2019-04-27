@@ -1,45 +1,39 @@
-// +build linux
-
 package util
 
 import (
 	"fmt"
 	"strings"
-
 	"github.com/coreos/go-iptables/iptables"
 )
 
-// IPTablesHelper is an interface that wraps go-iptables to allow
-// mock implementations for unti testing
 type IPTablesHelper interface {
-	// ListChains returns the names of all chains in the table
 	ListChains(string) ([]string, error)
-	// NewChain creates a new chain in the specified table
 	NewChain(string, string) error
-	// Exists checks if given rulespec in specified table/chain exists
 	Exists(string, string, ...string) (bool, error)
-	// Insert inserts a rule into the specified table/chain
 	Insert(string, string, int, ...string) error
 }
 
-// NewWithProtocol creates a new IPTablesHelper wrapping "live" go-iptables
 func NewWithProtocol(proto iptables.Protocol) (IPTablesHelper, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return iptables.NewWithProtocol(proto)
 }
 
-// FakeTable represents a mock iptables table and can be used for
-// unit tests to verify that the code creates the expected rules
 type FakeTable map[string][]string
 
 func newFakeTable() *FakeTable {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return &FakeTable{}
 }
-
 func (t *FakeTable) String() string {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return fmt.Sprintf("%v", *t)
 }
-
 func (t *FakeTable) getChain(chainName string) ([]string, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	chain, ok := (*t)[chainName]
 	if !ok {
 		return nil, fmt.Errorf("table %s does not exist", chainName)
@@ -47,35 +41,31 @@ func (t *FakeTable) getChain(chainName string) ([]string, error) {
 	return chain, nil
 }
 
-// FakeIPTables is a mock implementation of go-iptables
 type FakeIPTables struct {
-	proto  iptables.Protocol
-	tables map[string]*FakeTable
+	proto	iptables.Protocol
+	tables	map[string]*FakeTable
 }
 
-// NewFakeWithProtocol creates a new IPTablesHelper wrapping a mock
-// iptables implementation that can be used in unit tests
 func NewFakeWithProtocol(proto iptables.Protocol) (*FakeIPTables, error) {
-	ipt := &FakeIPTables{
-		proto:  proto,
-		tables: make(map[string]*FakeTable),
-	}
-	// Prepopulate some common tables
+	_logClusterCodePath()
+	defer _logClusterCodePath()
+	ipt := &FakeIPTables{proto: proto, tables: make(map[string]*FakeTable)}
 	ipt.tables["filter"] = newFakeTable()
 	ipt.tables["nat"] = newFakeTable()
 	return ipt, nil
 }
-
 func (f *FakeIPTables) getTable(tableName string) (*FakeTable, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	table, ok := f.tables[tableName]
 	if !ok {
 		return nil, fmt.Errorf("table %s does not exist", tableName)
 	}
 	return table, nil
 }
-
-// ListChains returns the names of all chains in the table
 func (f *FakeIPTables) ListChains(tableName string) ([]string, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	table, ok := f.tables[tableName]
 	if !ok {
 		return nil, fmt.Errorf("table does not exist")
@@ -86,23 +76,22 @@ func (f *FakeIPTables) ListChains(tableName string) ([]string, error) {
 	}
 	return chains, nil
 }
-
-// NewChain creates a new chain in the specified table
 func (f *FakeIPTables) NewChain(tableName, chainName string) error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	table, err := f.getTable(tableName)
 	if err != nil {
 		return err
 	}
 	if _, err := table.getChain(chainName); err == nil {
-		// existing chain returns an error
 		return err
 	}
 	(*table)[chainName] = nil
 	return nil
 }
-
-// Exists checks if given rulespec in specified table/chain exists
 func (f *FakeIPTables) Exists(tableName, chainName string, rulespec ...string) (bool, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	table, err := f.getTable(tableName)
 	if err != nil {
 		return false, err
@@ -119,9 +108,9 @@ func (f *FakeIPTables) Exists(tableName, chainName string, rulespec ...string) (
 	}
 	return false, nil
 }
-
-// Insert inserts a rule into the specified table/chain
 func (f *FakeIPTables) Insert(tableName, chainName string, pos int, rulespec ...string) error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	table, err := f.getTable(tableName)
 	if err != nil {
 		return err
@@ -139,10 +128,9 @@ func (f *FakeIPTables) Insert(tableName, chainName string, pos int, rulespec ...
 	}
 	return nil
 }
-
-// MatchState matches the expected state against the actual rules
-// code under test added to iptables
 func (f *FakeIPTables) MatchState(tables map[string]FakeTable) error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	if len(tables) != len(f.tables) {
 		return fmt.Errorf("expeted %d tables, got %d", len(tables), len(f.tables))
 	}

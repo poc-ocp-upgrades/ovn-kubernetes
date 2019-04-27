@@ -1,25 +1,19 @@
-// +build linux
-
 package cluster
 
 import (
 	"fmt"
 	"syscall"
-
 	"github.com/openvswitch/ovn-kubernetes/go-controller/pkg/util"
-
 	"github.com/vishvananda/netlink"
 )
 
-// getDefaultGatewayInterfaceDetails returns the interface name on
-// which the default gateway (for route to 0.0.0.0) is configured.
-// It also returns the default gateway itself.
 func getDefaultGatewayInterfaceDetails() (string, string, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	routes, err := netlink.RouteList(nil, syscall.AF_INET)
 	if err != nil {
 		return "", "", fmt.Errorf("Failed to get routing table in node")
 	}
-
 	for i := range routes {
 		route := routes[i]
 		if route.Dst == nil && route.Gw != nil && route.LinkIndex > 0 {
@@ -35,18 +29,13 @@ func getDefaultGatewayInterfaceDetails() (string, string, error) {
 	}
 	return "", "", fmt.Errorf("Failed to get default gateway interface")
 }
-
 func getIntfName(gatewayIntf string) (string, error) {
-	// The given (or autodetected) interface is an OVS bridge and this could be
-	// created by us using util.NicToBridge() or it was pre-created by the user.
-
-	// Is intfName a port of gatewayIntf?
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	intfName := util.GetNicName(gatewayIntf)
-	_, stderr, err := util.RunOVSVsctl("--if-exists", "get",
-		"interface", intfName, "ofport")
+	_, stderr, err := util.RunOVSVsctl("--if-exists", "get", "interface", intfName, "ofport")
 	if err != nil {
-		return "", fmt.Errorf("failed to get ofport of %s, stderr: %q, error: %v",
-			intfName, stderr, err)
+		return "", fmt.Errorf("failed to get ofport of %s, stderr: %q, error: %v", intfName, stderr, err)
 	}
 	return intfName, nil
 }

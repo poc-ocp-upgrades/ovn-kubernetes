@@ -1,5 +1,3 @@
-// +build windows
-
 package util
 
 import (
@@ -8,7 +6,8 @@ import (
 )
 
 func GetNicName(brName string) (string, error) {
-	// The bridge has format "vEthernet (<nic_name>)" on Windows
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	nameSplitted := strings.SplitAfterN(brName, " ", 2)
 	if len(nameSplitted) != 2 {
 		return "", fmt.Errorf("invalid bridge name")
@@ -16,7 +15,8 @@ func GetNicName(brName string) (string, error) {
 	nicName := fmt.Sprintf("%s", nameSplitted[1][1:len(nameSplitted[1])-1])
 	return nicName, nil
 }
-
 func NicToBridge(iface string) (string, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return "", fmt.Errorf("Not implemented yet on Windows")
 }

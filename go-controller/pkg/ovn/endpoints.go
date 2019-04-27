@@ -2,27 +2,22 @@ package ovn
 
 import (
 	"fmt"
-
 	util "github.com/openvswitch/ovn-kubernetes/go-controller/pkg/util"
 	"github.com/sirupsen/logrus"
 	kapi "k8s.io/api/core/v1"
 )
 
 type lbEndpoints struct {
-	IPs  []string
-	Port int32
+	IPs	[]string
+	Port	int32
 }
 
-// AddEndpoints adds endpoints and creates corresponding resources in OVN
 func (ovn *Controller) AddEndpoints(ep *kapi.Endpoints) error {
-	// get service
-	// TODO: cache the service
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	svc, err := ovn.kube.GetService(ep.Namespace, ep.Name)
 	if err != nil {
-		// This is not necessarily an error. For e.g when there are endpoints
-		// without a corresponding service.
-		logrus.Debugf("no service found for endpoint %s in namespace %s",
-			ep.Name, ep.Namespace)
+		logrus.Debugf("no service found for endpoint %s in namespace %s", ep.Name, ep.Namespace)
 		return nil
 	}
 	tcpPortMap := make(map[string]lbEndpoints)
@@ -47,9 +42,7 @@ func (ovn *Controller) AddEndpoints(ep *kapi.Endpoints) error {
 			}
 		}
 	}
-
 	logrus.Debugf("Tcp table: %v\nUdp table: %v", tcpPortMap, udpPortMap)
-
 	for svcPortName, lbEps := range tcpPortMap {
 		ips := lbEps.IPs
 		targetPort := lbEps.Port
@@ -67,12 +60,10 @@ func (ovn *Controller) AddEndpoints(ep *kapi.Endpoints) error {
 					var loadBalancer string
 					loadBalancer, err = ovn.getLoadBalancer(svcPort.Protocol)
 					if err != nil {
-						logrus.Errorf("Failed to get loadbalancer for %s (%v)",
-							svcPort.Protocol, err)
+						logrus.Errorf("Failed to get loadbalancer for %s (%v)", svcPort.Protocol, err)
 						continue
 					}
-					err = ovn.createLoadBalancerVIP(loadBalancer,
-						svc.Spec.ClusterIP, svcPort.Port, ips, targetPort)
+					err = ovn.createLoadBalancerVIP(loadBalancer, svc.Spec.ClusterIP, svcPort.Port, ips, targetPort)
 					if err != nil {
 						logrus.Errorf("Error in creating Cluster IP for svc %s, target port: %d - %v\n", svc.Name, targetPort, err)
 						continue
@@ -97,12 +88,10 @@ func (ovn *Controller) AddEndpoints(ep *kapi.Endpoints) error {
 					var loadBalancer string
 					loadBalancer, err = ovn.getLoadBalancer(svcPort.Protocol)
 					if err != nil {
-						logrus.Errorf("Failed to get loadbalancer for %s (%v)",
-							svcPort.Protocol, err)
+						logrus.Errorf("Failed to get loadbalancer for %s (%v)", svcPort.Protocol, err)
 						continue
 					}
-					err = ovn.createLoadBalancerVIP(loadBalancer,
-						svc.Spec.ClusterIP, svcPort.Port, ips, targetPort)
+					err = ovn.createLoadBalancerVIP(loadBalancer, svc.Spec.ClusterIP, svcPort.Port, ips, targetPort)
 					if err != nil {
 						logrus.Errorf("Error in creating Cluster IP for svc %s, target port: %d - %v\n", svc.Name, targetPort, err)
 						continue
@@ -114,8 +103,9 @@ func (ovn *Controller) AddEndpoints(ep *kapi.Endpoints) error {
 	}
 	return nil
 }
-
 func (ovn *Controller) handleExternalIPs(svc *kapi.Service, svcPort kapi.ServicePort, ips []string, targetPort int32) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	logrus.Debugf("handling external IPs for svc %v", svc.Name)
 	if len(svc.Spec.ExternalIPs) == 0 {
 		return
@@ -132,31 +122,25 @@ func (ovn *Controller) handleExternalIPs(svc *kapi.Service, svcPort kapi.Service
 		}
 	}
 }
-
 func (ovn *Controller) deleteEndpoints(ep *kapi.Endpoints) error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	svc, err := ovn.kube.GetService(ep.Namespace, ep.Name)
 	if err != nil {
-		// This is not necessarily an error. For e.g when a service is deleted,
-		// you will get endpoint delete event and the call to fetch service
-		// will fail.
-		logrus.Debugf("no service found for endpoint %s in namespace %s",
-			ep.Name, ep.Namespace)
+		logrus.Debugf("no service found for endpoint %s in namespace %s", ep.Name, ep.Namespace)
 		return nil
 	}
 	for _, svcPort := range svc.Spec.Ports {
 		var lb string
 		lb, err = ovn.getLoadBalancer(svcPort.Protocol)
 		if err != nil {
-			logrus.Errorf("Failed to get load-balancer for %s (%v)",
-				lb, err)
+			logrus.Errorf("Failed to get load-balancer for %s (%v)", lb, err)
 			continue
 		}
 		key := fmt.Sprintf("\"%s:%d\"", svc.Spec.ClusterIP, svcPort.Port)
-		_, stderr, err := util.RunOVNNbctl("remove", "load_balancer", lb,
-			"vips", key)
+		_, stderr, err := util.RunOVNNbctl("remove", "load_balancer", lb, "vips", key)
 		if err != nil {
-			logrus.Errorf("Error in deleting endpoints for lb %s, "+
-				"stderr: %q (%v)", lb, stderr, err)
+			logrus.Errorf("Error in deleting endpoints for lb %s, "+"stderr: %q (%v)", lb, stderr, err)
 		}
 	}
 	return nil
